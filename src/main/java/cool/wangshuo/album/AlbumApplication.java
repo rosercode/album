@@ -9,6 +9,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AlbumApplication {
 
+    public static String imagePath;
+    public static String imagePace;
+
+    @Value("${image.path}")
+    public void setImagePath(String imagePath) {
+        AlbumApplication.imagePath = imagePath;
+    }
+
+    @Value("${image.face}")
+    public void setImagePace(String imagePace) {
+        AlbumApplication.imagePace = imagePace;
+    }
 
 
     public static void main(String[] args) {

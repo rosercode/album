@@ -1,0 +1,43 @@
+server:
+  port: 8063
+  servlet:
+    context-path: /
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://10.14.103.4:10095/album_db?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+    username: root
+    password: ENC(w3WHoNwv+ltPmuJoSFcrin7GhTJuGtTMPEdP8hjus+vjKPMQizlbNbp8o5S2vwmh/Sjov49dD2c5AX115wNgYg==)
+  devtools:
+    restart:
+      enabled: true
+      additional-paths: src/main/resources/static
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    encoding: UTF-8 # 编码
+    suffix: .html # 模板后缀
+    mode: HTML # 模板
+  application:
+    name: album
+mybatis:
+  type-aliases-package: com.wangsh.album.entity
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:mappers/*.xml
+
+logging:
+  pattern:
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(-){faint} %clr([%14.14t]){faint} %clr(%-40.40logger.%13.13M){cyan} %clr(%3.3L) %clr(:){faint} %msg%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"
+
+
+# 自定义配置信息：图片保存地址
+image:
+  # 相册内的图片的保存位置
+  path: E:\IdeaProject\album_springboot\image
+  # 相册封面保存路径
+  face: E:\IdeaProject\album_springboot\album_springboot\src\main\resources\static\faceImage

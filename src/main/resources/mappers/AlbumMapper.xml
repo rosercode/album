@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cool.wangshuo.album.mapper.AlbumMapper">
+
+    <resultMap type="cool.wangshuo.album.entity.AlbumEntity" id="AlbumDbAlbumMap">
+        <result property="albumId" column="albumId" jdbcType="INTEGER"/>
+        <result property="userId" column="userId" jdbcType="INTEGER"/>
+        <result property="albumName" column="albumName" jdbcType="VARCHAR"/>
+        <result property="albumStatue" column="albumStatue" jdbcType="INTEGER"/>
+        <result property="albumRight" column="albumRight" jdbcType="INTEGER"/>
+        <result property="albumTime" column="albumTime" jdbcType="TIMESTAMP"/>
+        <result property="albumFace" column="albumFace" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="AlbumDbAlbumMap">
+        select
+          albumId, userId, albumName, albumStatue, albumRight, albumTime, albumFace
+        from album_db_album
+        where albumId = #{albumId} ORDER BY `albumTime` DESC
+    </select>
+
+
+    <!--联表查询：获取所有公开的相册-->
+    <select id="queryAllPublic" resultType="com.alibaba.fastjson.JSONObject" >
+        select
+            album.albumId, album.userId, user.userName,album.albumName, album.albumStatue, album.albumRight, album.albumTime, album.albumFace
+        from album_db_album album
+            left join album_db_user user on album.`userId` = user.userId
+            where albumStatue = 1
+            ORDER BY `albumTime` DESC
+    </select>
+
+    <select id="queryAll" resultMap="AlbumDbAlbumMap">
+        select
+            albumId, userId, albumName, albumStatue, albumRight, albumTime, albumFace
+        from album_db_album
+        ORDER BY `albumTime` DESC
+    </select>
+
+    <!--查询指定条件的所有数据-->
+    <select id="queryAllByLimit" resultType="com.alibaba.fastjson.JSONObject">
+        select
+        album.albumId, album.userId, user.userName,album.albumName, album.albumStatue, album.albumRight, album.albumTime, album.albumFace
+        from album_db_album album
+        left join album_db_user user on album.`userId` = user.userId
+        <where>
+            <if test="albumId != null">
+                and album.albumId = #{albumId}
+            </if>
+            <if test="userId != null">
+                and album.userId = #{userId}
+            </if>
+            <if test="albumName != null and albumName != ''">
+                and album.albumName = #{albumName}
+            </if>
+            <if test="albumStatue != null">
+                and album.albumStatue = #{albumStatue}
+            </if>
+            <if test="albumRight != null">
+                and album.albumRight = #{albumRight}
+            </if>
+            <if test="albumTime != null">
+                and album.albumTime = #{albumTime}
+            </if>
+            <if test="albumFace != null and albumFace!=''">
+                and album.albumFace = #{albumFace}
+            </if>
+        </where>
+        ORDER BY `albumTime` DESC
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from album_db_album
+        <where>
+            <if test="albumId != null">
+                and albumId = #{albumId}
+            </if>
+            <if test="userId != null">
+                and userId = #{userId}
+            </if>
+            <if test="albumName != null and albumName != ''">
+                and albumName = #{albumName}
+            </if>
+            <if test="albumStatue != null">
+                and albumStatue = #{albumStatue}
+            </if>
+            <if test="albumRight != null">
+                and albumRight = #{albumRight}
+            </if>
+            <if test="albumTime != null">
+                and albumTime = #{albumTime}
+            </if>
+            <if test="albumFace != null and albumFace != ''">
+                and albumFace = #{albumFace}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="albumId" useGeneratedKeys="true">
+        insert into album_db_album(albumId,userId, albumName, albumStatue, albumRight, albumTime, albumFace)
+        values (#{albumId}, #{userId}, #{albumName}, #{albumStatue}, #{albumRight}, now(), #{albumFace})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="albumId" useGeneratedKeys="true">
+        insert into album_db_album(userId, albumName, albumStatue, albumRight, albumTime, albumFace)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.userId}, #{entity.albumName}, #{entity.albumStatue}, #{entity.albumRight}, now(), #{albumFace})
+        </foreach>
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update album_db_album
+        <set>
+            <if test="userId != null">
+                userId = #{userId},
+            </if>
+            <if test="albumName != null and albumName != ''">
+                albumName = #{albumName},
+            </if>
+            <if test="albumStatue != null">
+                albumStatue = #{albumStatue},
+            </if>
+            <if test="albumRight != null">
+                albumRight = #{albumRight},
+            </if>
+            <if test="albumTime != null">
+                albumTime = #{albumTime},
+            </if>
+            <if test="albumFace != null and albumFace != ''">
+                albumFace = #{albumFace}
+            </if>
+        </set>
+        where albumId = #{albumId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from album_db_album where albumId = #{albumId}
+    </delete>
+
+</mapper>
+

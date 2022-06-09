@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cool.wangshuo.album.mapper.UserMapper">
+
+    <resultMap type="cool.wangshuo.album.entity.AlbumUserEntity" id="AlbumDb_UserMap">
+        <result property="userId" column="userId" jdbcType="INTEGER"/>
+        <result property="username" column="userName" jdbcType="VARCHAR"/>
+        <result property="userStatue" column="userStatue" jdbcType="INTEGER"/>
+        <result property="userNum" column="userNum" jdbcType="VARCHAR"/>
+        <result property="userPwd" column="userPwd" jdbcType="VARCHAR"/>
+        <result property="userRight" column="userRight" jdbcType="INTEGER"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="qqCode" column="qqCode" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="AlbumDb_UserMap">
+        select
+          userId, userName, userStatue, userNum, userPwd, userRight, phone, address, qqCode, remark
+        from album_db_user
+        where userId = #{userId}
+    </select>
+
+    <!--查询指定条件的所有数据-->
+    <select id="queryAllByLimit" resultMap="AlbumDb_UserMap">
+        select
+          userId, userName, userStatue, userNum, userPwd, userRight, phone, address, qqCode, remark
+        from album_db_user
+        <where>
+            <if test="userId != null">
+                and userId = #{userId}
+            </if>
+            <if test="username != null and username != ''">
+                and userName = #{username}
+            </if>
+            <if test="userStatue != null">
+                and userStatue = #{userStatue}
+            </if>
+            <if test="userNum != null and userNum != ''">
+                and userNum = #{userNum}
+            </if>
+            <if test="userPwd != null and userPwd != ''">
+                and userPwd = #{userPwd}
+            </if>
+            <if test="userRight != null">
+                and userRight = #{userRight}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address}
+            </if>
+            <if test="qqCode != null and qqCode != ''">
+                and qqCode = #{qqCode}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark}
+            </if>
+        </where>
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from album_db_user
+        <where>
+            <if test="userId != null">
+                and userId = #{userId}
+            </if>
+            <if test="username != null and username != ''">
+                and userName = #{username}
+            </if>
+            <if test="userStatue != null">
+                and userStatue = #{userStatue}
+            </if>
+            <if test="userNum != null and userNum != ''">
+                and userNum = #{userNum}
+            </if>
+            <if test="userPwd != null and userPwd != ''">
+                and userPwd = #{userPwd}
+            </if>
+            <if test="userRight != null">
+                and userRight = #{userRight}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address}
+            </if>
+            <if test="qqCode != null and qqCode != ''">
+                and qqCode = #{qqCode}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="userId" useGeneratedKeys="true">
+        insert into album_db_user(userId, userName, userStatue, userNum, userPwd, userRight, phone, address, qqCode, remark)
+        values (#{userId}, #{username}, #{userStatue}, #{userNum}, #{userPwd}, #{userRight}, #{phone}, #{address}, #{qqCode}, #{remark})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="userId" useGeneratedKeys="true">
+        insert into album_db_user(userName, userStatue, userNum, userPwd, userRight, phone, address, qqCode, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.username}, #{entity.userStatue}, #{entity.userNum}, #{entity.userPwd}, #{entity.userRight}, #{entity.phone}, #{entity.address}, #{entity.qqCode}, #{entity.remark})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="userId" useGeneratedKeys="true">
+        insert into album_db_user(userName, userStatue, userNum, userPwd, userRight, phone, address, qqCode, remark)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.username}, #{entity.userStatue}, #{entity.userNum}, #{entity.userPwd}, #{entity.userRight}, #{entity.phone}, #{entity.address}, #{entity.qqCode}, #{entity.remark})
+        </foreach>
+        on duplicate key update
+        userName = values(userName),
+        userStatue = values(userStatue),
+        userNum = values(userNum),
+        userPwd = values(userPwd),
+        userRight = values(userRight),
+        phone = values(phone),
+        address = values(address),
+        qqCode = values(qqCode),
+        remark = values(remark)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update album_db_user
+        <set>
+            <if test="username != null and username != ''">
+                userName = #{username},
+            </if>
+            <if test="userStatue != null">
+                userStatue = #{userStatue},
+            </if>
+            <if test="userNum != null and userNum != ''">
+                userNum = #{userNum},
+            </if>
+            <if test="userPwd != null and userPwd != ''">
+                userPwd = #{userPwd},
+            </if>
+            <if test="userRight != null">
+                userRight = #{userRight},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+            <if test="qqCode != null and qqCode != ''">
+                qqCode = #{qqCode},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+        </set>
+        where userId = #{userId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from album_db_user where userId = #{userId}
+    </delete>
+
+</mapper>
+

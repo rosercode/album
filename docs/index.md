@@ -1,8 +1,21 @@
-[TOC]
 
+<!-- TOC -->
+- [项目架构](#项目架构)
+- [Database's Design](#databases-design)
+    - [1、表名：album_db_album](#1表名album_db_album)
+    - [2、表名：album_db_picture](#2表名album_db_picture)
+    - [3、表名：album_db_remark](#3表名album_db_remark)
+    - [4、表名：album_db_user](#4表名album_db_user)
+- [功能设计](#功能设计)
+<!-- /TOC -->
+
+
+## 项目架构
 
 
 ## Database's Design
+
+数据库这里使用 Mysql，版本为 8.0.26-0ubuntu0.20.04.2（运行在 Ubuntu20.04 上）
 
 E-R 图
 
@@ -97,6 +110,8 @@ E-R 图
 | 10       | remark       | 用户备注                | varchar      | 100      | YES        | null       |
 
  
+
+## 功能设计
 
  
 

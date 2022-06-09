@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>欢迎使用 (๑￫ܫ￩)</title>
+    <link rel="stylesheet" href="test.css">
+    <script src="/dict/vue/vue.js"></script>
+    <script src="/dict/axios/axios.js"></script>
+
+    <script src="/dict/alertifyjs/alertify.js"></script>
+    <link rel="stylesheet" href="/dict/alertifyjs/alertify.css"/>
+    <link rel="stylesheet" href="/dict/alertifyjs/css/themes/default.css"/>
+    <link rel="stylesheet" href="/dict/alertifyjs/css/themes/semantic.min.css"/>
+    <link rel="stylesheet" href="/dict/alertifyjs/css/themes/bootstrap.css"/>
+    <link rel="stylesheet" href="/dict/alertifyjs/alertify.rtl.min.css"/>
+    <link rel="stylesheet" href="/dict/alertifyjs/css/themes/default.rtl.min.css"/>
+    <link rel="stylesheet" href="/dict/alertifyjs/css/themes/semantic.rtl.min.css"/>
+    <link rel="stylesheet" href="/dict/alertifyjs/css/themes/bootstrap.rtl.css"/>
+
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+
+<div th:include="component/header"></div>
+
+<main role="main">
+    <br><br>
+    <div class="container my-5" id="main">
+
+        <!-- Section: Components -->
+        <section class="">
+            <section id="demo" class="">
+
+
+                <hr class="my-5" />
+
+                <!--Section: Cards-->
+                <section>
+                    <div class="text-center">
+                        <h4><strong>Welcome To Gallery</strong></h4><br>
+                    </div>
+                    <hr>
+                    <br>
+                    <!--Grid row-->
+                    <div class="row" v-if="albumList !== undefined && albumList.length > 0" >
+
+                        <!--Grid column 画廊-->
+                        <div class="col-lg-4 col-md-6 mb-4" v-for="(album,index) in albumList">
+                            <div class="card">
+                                <div class="bg-image hover-overlay ripple tmp" data-mdb-ripple-color="light">
+                                    <img :src="'/faceImage/'+album.albumFace" class="img-fluid" />
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{album.albumName}}</h5>
+                                    <p class="card-text">
+                                        <!--                                        Some quick example text to build on the card title and-->
+                                        <!--                                        make up the bulk of the card's content.-->
+                                    </p>
+                                    <a :href="'/AlbumDetail.html?albumId='+album.albumId" class="btn btn-primary" style="float: right">点击进入查看</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Grid row-->
+                </section>
+                <!--Section: Cards-->
+            </section>
+        </section>
+    </div>
+</main>
+
+<script src="/js/index.js"></script>
+
+</body>
+</html>

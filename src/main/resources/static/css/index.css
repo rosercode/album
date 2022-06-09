@@ -1,0 +1,13 @@
+body{
+    background: #84bdfd;
+}
+.tmp{
+    overflow:hidden;
+    background-position: center center;
+    background-repeat: no-repeat;
+    height: 300px!important;
+}
+img{
+    object-fit: cover;
+
+}

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cool.wangshuo.album.mapper.PictureMapper">
+
+    <resultMap type="cool.wangshuo.album.entity.AlbumPictureEntity" id="AlbumDbPictureMap">
+        <result property="photoId" column="photoId" jdbcType="INTEGER"/>
+        <result property="albumId" column="albumId" jdbcType="INTEGER"/>
+        <result property="photoName" column="photoName" jdbcType="VARCHAR"/>
+        <result property="photoStatue" column="photoStatue" jdbcType="INTEGER"/>
+        <result property="photoRight" column="photoRight" jdbcType="INTEGER"/>
+        <result property="photoIntro" column="photoIntro" jdbcType="VARCHAR"/>
+        <result property="photoUrl" column="photoUrl" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询指定相册的图片列表-->
+    <select id="queryById" resultMap="AlbumDbPictureMap">
+        select
+            photoId, albumId, photoName, photoStatue, photoRight, photoIntro, photoUrl
+        from album_db_picture
+        <where>
+            photoId = #{photoId}
+            <if test="photoStatue != null">
+            and photoStatue = #{photoStatue}
+        </if>
+        </where>
+    </select>
+
+    <!--查询指定相册的图片列表-->
+    <select id="queryByPage" resultMap="AlbumDbPictureMap">
+        select
+          photoId, albumId, photoName, photoStatue, photoRight, photoIntro, photoUrl
+        from album_db_picture
+        where albumId = #{albumId} and photoStatue = 1
+    </select>
+
+    <select id="queryAll" resultMap="AlbumDbPictureMap">
+        select
+            photoId, albumId, photoName, photoStatue, photoRight, photoIntro, photoUrl
+        from album_db_picture
+    </select>
+
+    <!--查询指定条件的所有数据-->
+    <select id="queryAllByLimit" resultMap="AlbumDbPictureMap">
+        select
+          photoId, albumId, photoName, photoStatue, photoRight, photoIntro, photoUrl
+        from album_db_picture
+        <where>
+            <if test="photoId != null">
+                and photoId = #{photoId}
+            </if>
+            <if test="albumId != null">
+                and albumId = #{albumId}
+            </if>
+            <if test="photoUserId != null">
+                and photoUserId = #{photoUserId}
+            </if>
+            <if test="photoName != null and photoName != ''">
+                and photoName = #{photoName}
+            </if>
+            <if test="photoStatue != null">
+                and photoStatue = #{photoStatue}
+            </if>
+            <if test="photoRight != null">
+                and photoRight = #{photoRight}
+            </if>
+            <if test="photoIntro != null and photoIntro != ''">
+                and photoIntro = #{photoIntro}
+            </if>
+            <if test="photoUrl != null and photoUrl != ''">
+                and photoUrl = #{photoUrl}
+            </if>
+        </where>
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from album_db_picture
+        <where>
+            <if test="photoId != null">
+                and photoId = #{photoId}
+            </if>
+            <if test="albumId != null">
+                and albumId = #{albumId}
+            </if>
+            <if test="photoName != null and photoName != ''">
+                and photoName = #{photoName}
+            </if>
+            <if test="photoStatue != null">
+                and photoStatue = #{photoStatue}
+            </if>
+            <if test="photoRight != null">
+                and photoRight = #{photoRight}
+            </if>
+            <if test="photoIntro != null and photoIntro != ''">
+                and photoIntro = #{photoIntro}
+            </if>
+            <if test="photoUrl != null and photoUrl != ''">
+                and photoUrl = #{photoUrl}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="" useGeneratedKeys="true">
+        insert into album_db_picture(photoId, albumId, photoUserId, photoName, photoStatue, photoRight, photoIntro, photoUrl)
+        values (#{photoId}, #{albumId}, #{photoUserId}, #{photoName}, #{photoStatue}, #{photoRight}, #{photoIntro}, #{photoUrl})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="" useGeneratedKeys="true">
+        insert into album_db_picture(photoId, albumId, photoName, photoStatue, photoRight, photoIntro, photoUrl)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.photoId}, #{entity.albumId}, #{entity.photoName}, #{entity.photoStatue}, #{entity.photoRight}, #{entity.photoIntro}, #{entity.photoUrl})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="" useGeneratedKeys="true">
+        insert into album_db_picture(photoId, albumId, photoName, photoStatue, photoRight, photoIntro, photoUrl)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.photoId}, #{entity.albumId}, #{entity.photoName}, #{entity.photoStatue}, #{entity.photoRight}, #{entity.photoIntro}, #{entity.photoUrl})
+        </foreach>
+        on duplicate key update
+        photoId = values(photoId),
+        albumId = values(albumId),
+        photoName = values(photoName),
+        photoStatue = values(photoStatue),
+        photoRight = values(photoRight),
+        photoIntro = values(photoIntro),
+        photoUrl = values(photoUrl)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update album_db_picture
+        <set>
+            <if test="photoId != null">
+                photoId = #{photoId},
+            </if>
+            <if test="albumId != null">
+                albumId = #{albumId},
+            </if>
+            <if test="photoName != null and photoName != ''">
+                photoName = #{photoName},
+            </if>
+            <if test="photoStatue != null">
+                photoStatue = #{photoStatue},
+            </if>
+            <if test="photoRight != null">
+                photoRight = #{photoRight},
+            </if>
+            <if test="photoIntro != null and photoIntro != ''">
+                photoIntro = #{photoIntro},
+            </if>
+            <if test="photoUrl != null and photoUrl != ''">
+                photoUrl = #{photoUrl},
+            </if>
+        </set>
+        where  photoId = #{photoId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from album_db_picture where  photoId = #{photoId}
+    </delete>
+
+</mapper>
+

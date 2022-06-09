@@ -1,5 +1,9 @@
 static/faceImage
+static/dict/bootstrapvalidator-0.5.2
 static/images/wallhaven-ey7dor.jpg
 static/login/login_test.html
 static/login/registered_test.html
 README.md
+templates/404.html
+templates/index_1.html
+templates/index_2.html

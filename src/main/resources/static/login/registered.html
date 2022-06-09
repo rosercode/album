@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>registered</title>
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/floating-labels/">
+  <link href="/dict/bootstrap/bootstrap.css" rel="stylesheet">
+  <link href="/dict/bootstrap/floating-labels.css" rel="stylesheet">
+  <script src="/dict/bootstrap/popper.js"></script>
+  <script src="/dict/holder.min.js"></script>
+  <script src="/dict/jquery/jquery.js"></script>
+  <script src="/dict/bootstrap/bootstrap.js"></script>
+  <script src="/dict/axios/axios.js"></script>
+
+  <script src="/dict/alertifyjs/alertify.js"></script>
+  <link rel="stylesheet" href="/dict/alertifyjs/alertify.css"/>
+  <link rel="stylesheet" href="/dict/alertifyjs/css/themes/default.css"/>
+  <link rel="stylesheet" href="/dict/alertifyjs/css/themes/semantic.min.css"/>
+  <link rel="stylesheet" href="/dict/alertifyjs/css/themes/bootstrap.css"/>
+  <link rel="stylesheet" href="/dict/alertifyjs/alertify.rtl.min.css"/>
+  <link rel="stylesheet" href="/dict/alertifyjs/css/themes/default.rtl.min.css"/>
+  <link rel="stylesheet" href="/dict/alertifyjs/css/themes/semantic.rtl.min.css"/>
+  <link rel="stylesheet" href="/dict/alertifyjs/css/themes/bootstrap.rtl.css"/>
+
+</head>
+
+<body>
+<div class="container">
+
+  <form class="form-signin">
+    <div class="text-center mb-4">
+      <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+    </div>
+
+    <div class="form-label-group">
+      <input type="text" id="inputNickname" name="nickname" class="form-control" placeholder="昵称" required autofocus>
+      <label for="inputNickname">昵称</label>
+    </div>
+
+    <div class="form-label-group">
+      <input type="text" id="inputAccount" class="form-control" placeholder="账号" required autofocus>
+      <label for="inputAccount">账号</label>
+    </div>
+
+    <div class="form-label-group">
+      <input type="password" id="inputPassword1" class="form-control" placeholder="密码" required>
+      <label for="inputPassword1">密码</label>
+    </div>
+
+    <div class="form-label-group">
+      <input type="password" id="inputPassword2" class="form-control" placeholder="再次确认密码" required>
+      <label for="inputPassword2">再次确认密码</label>
+    </div>
+
+    <div class="form-label-group">
+      <input type="text" id="inputPhone" class="form-control" placeholder="电话号码" required>
+      <label for="inputPhone">电话号码</label>
+    </div>
+
+    <div class="form-label-group">
+      <input type="text" id="inputAddress" class="form-control" placeholder="QQ" required>
+      <label for="inputAddress">用户地址</label>
+    </div>
+
+    <div class="form-label-group">
+      <input type="text" id="inputQqCode" class="form-control" placeholder="QQ" required>
+      <label for="inputQqCode">QQ</label>
+    </div>
+
+    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="registered()" οnsubmit="return false">registered</button>
+    <hr>
+    <div class="text-center">
+      <a href="/login/login.html">Login</a>
+    </div>
+    <p class="mt-5 mb-3 text-muted text-center">&copy; 2017-2022</p>
+  </form>
+
+  <script>
+
+    // 注册用户信息
+    function registered() {
+      axios({
+        method: 'get',
+        url: '/user/register.api',
+        params: {
+          nickname: document.getElementById("inputNickname").value,
+          account: document.getElementById("inputAccount").value,
+          passwd1: document.getElementById("inputPassword1").value,
+          passwd2: document.getElementById("inputPassword2").value,
+          phone: document.getElementById("inputPhone").value,
+          address:document.getElementById("inputAddress").value,
+          qqCode: document.getElementById("inputQqCode").value
+        }
+      }).then(function (response) {
+        var data = response.data
+        console.log(data)
+        if (data['code'] == 1){
+          alertify.notify(data.message, 'success', 3, function () {
+            window.location.href = '/login/login.html';
+          });
+        }else{
+          alertify.notify(data.message, 'success', 3, function () {});
+        }
+      })
+    }
+  </script>
+
+</div>
+</body>
+</html>

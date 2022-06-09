@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+
+  <title>管理员后台管理界面</title>
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/carousel/">
+
+  <!-- Bootstrap core CSS -->
+  <link href="/dict/bootstrap/bootstrap.css" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="/dict/carousel.css" rel="stylesheet">
+  <script src="/dict/jquery/jquery-3.2.1.slim.js" ></script>
+  <script src="/dict/bootstrap/popper.js"></script>
+  <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+  <script src="/dict/holder.min.js"></script>
+  <script src="/dict/jquery/jquery.js"></script>
+  <script src="/dict/bootstrap/bootstrap.js"></script>
+
+  <script src="/dict/vue/vue.js"></script>
+  <script src="/dict/axios/axios.js"></script>
+
+
+  <script src="/dict/alertifyjs/alertify.js"></script>
+  <link rel="stylesheet" href="/dict/alertifyjs/alertify.css"/>
+  <link rel="stylesheet" href="/dict/alertifyjs/css/themes/default.css"/>
+  <link rel="stylesheet" href="/dict/alertifyjs/css/themes/semantic.min.css"/>
+  <link rel="stylesheet" href="/dict/alertifyjs/css/themes/bootstrap.css"/>
+  <link rel="stylesheet" href="/dict/alertifyjs/alertify.rtl.min.css"/>
+  <link rel="stylesheet" href="/dict/alertifyjs/css/themes/default.rtl.min.css"/>
+  <link rel="stylesheet" href="/dict/alertifyjs/css/themes/semantic.rtl.min.css"/>
+  <link rel="stylesheet" href="/dict/alertifyjs/css/themes/bootstrap.rtl.css"/>
+
+
+  <script src="/dict/jquery.slim.min.js"></script>
+  <script src="/dict/bootstrap.bundle.js"></script>
+  <script src="/dict/feather.min.js"></script>
+
+</head>
+<body>
+
+<header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="/">Carousel</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
+            aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/home/home.html">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <!--                 <li class="nav-item"> -->
+        <!--                     <a class="nav-link" href="#">Link</a> -->
+        <!--                 </li> -->
+        <!--                 <li class="nav-item"> -->
+        <!--                     <a class="nav-link disabled" href="#">Disabled</a> -->
+        <!--                 </li> -->
+      </ul>
+      <form class="form-inline mt-2 mt-md-0">
+        <!--                 <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"> -->
+        <!--                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
+      </form>
+    </div>
+    <div class="col-4 d-flex justify-content-end align-items-center">
+      <a class="btn btn-sm btn-outline-secondary" href="/login/login.html">Sign up</a>
+    </div>
+  </nav>
+</header>
+
+<main role="main">
+
+  <!-- Marketing messaging and featurettes
+  ================================================== -->
+  <!-- Wrap the rest of the page in another container to center all the content. -->
+
+  <div class="container-fluid" id="main">
+    <div class="row">
+      <!--        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">-->
+      <!--          <div class="sidebar-sticky pt-3">-->
+      <!--            <ul class="nav flex-column">-->
+      <!--              <li class="nav-item">-->
+      <!--                <a class="nav-link active" href="#">-->
+      <!--                  <span data-feather="home"></span>-->
+      <!--                  用户管理 <span class="sr-only">(current)</span>-->
+      <!--                </a>-->
+      <!--              </li>-->
+      <!--              <li class="nav-item">-->
+      <!--                <a class="nav-link" href="#">-->
+      <!--                  <span data-feather="file"></span>-->
+      <!--                  相册管理-->
+      <!--                </a>-->
+      <!--              </li>-->
+      <!--              <li class="nav-item">-->
+      <!--                <a class="nav-link" href="#">-->
+      <!--                  <span data-feather="shopping-cart"></span>-->
+      <!--                  照片管理-->
+      <!--                </a>-->
+      <!--              </li>-->
+      <!--              <li class="nav-item">-->
+      <!--                <a class="nav-link" href="#">-->
+      <!--                  <span data-feather="users"></span>-->
+      <!--                  评论管理-->
+      <!--                </a>-->
+      <!--              </li>-->
+      <!--            </ul>-->
+      <!--          </div>-->
+      <!--        </nav>-->
+
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+          <!--            <div class="btn-toolbar mb-2 mb-md-0">-->
+          <!--              <div class="btn-group mr-2">-->
+          <!--                <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>-->
+          <!--                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>-->
+          <!--              </div>-->
+          <!--              <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">-->
+          <!--                <span data-feather="calendar"></span>-->
+          <!--                This week-->
+          <!--              </button>-->
+          <!--            </div>-->
+        </div>
+
+        <h3>用户管理</h3>
+        <div class="table-responsive">
+          <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>用户名</th>
+              <th>用户状态</th>
+              <th>用户账号</th>
+              <th>用户密码</th>
+              <th>用户权限</th>
+              <th>用户电话</th>
+              <th>用户地址</th>
+              <th>用户QQ</th>
+              <th>用户备注</th>
+              <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(user,index) in userList">
+              <td>{{index+1}}</td>
+              <td>{{user.username}}</td>
+              <td>{{user.userStatue}}</td>
+              <td>{{user.userNum}}</td>
+              <td>{{user.userPwd}}</td>
+              <td>{{user.userRight == 1 ? '管理员': '普通用户'}}</td>
+              <td>{{user.phone}}</td>
+              <td>{{user.address}}</td>
+              <td>{{user.qqCode}}</td>
+              <td>{{user.remark}}</td>
+              <td>
+                <button class="btn btn-danger" @click="deleteUser(user.userId)">删除</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>相册管理</h3>
+        <div class="table-responsive">
+          <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>相册编号</th>
+              <th>所属用户编号</th>
+              <th>所属用户昵称</th>
+              <th>相册名称</th>
+              <th>相册状态</th>
+              <th>相册权限</th>
+              <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(album,index) in albumList">
+              <td>{{index+1}}</td>
+              <td>{{album.albumId}}</td>
+              <td>{{album.userId}}</td>
+              <td>{{album.userName}}</td>
+              <td>{{album.albumName}}</td>
+              <td>{{album.albumStatue == '1' ? '有效' : '禁用'}}</td>
+              <td>{{album.albumRight == '1' ? '可访问（公开）' : '不可访问（私有）'}}</td>
+              <td>
+                <button class="btn btn-danger" @click="deleteAlbum(album.albumId)">删除</button>
+                <button class="btn btn-primary" @click="updateAlbum(album.albumId)">有效或禁用</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>照片管理</h3>
+        <div class="table-responsive">
+          <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>照片编号</th>
+              <th>所属相册编号</th>
+              <th>照片名称</th>
+              <th>照片状态</th>
+              <th>照片权限</th>
+              <th>照片路径</th>
+              <th>图片</th>
+              <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(picture,index) in pictureList">
+              <td>{{index+1}}</td>
+              <td>{{picture.photoId}}</td>
+              <td>{{picture.albumId}}</td>
+              <td>{{picture.photoName}}</td>
+              <td>{{picture.photoStatue == 1 ? '管理员审核通过' : '未审核或者没有通过审核' }}</td>
+              <td>{{picture.photoRight == 1 ? '可访问' : '不可访问' }}</td>
+              <td>{{picture.photoIntro}}</td>
+              <td>{{picture.photoUrl}}</td>
+              <td><a :href="'/picture/one?photoId='+ picture.photoId">点击查看图片</a></td>
+              <td>
+                <button class="btn btn-danger" @click="deletePicture(picture.photoId)">删除</button>
+                <button class="btn btn-primary" @click="updatePicture(picture.photoId)">有效或禁用</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>评论管理</h3>
+        <div class="table-responsive">
+          <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>评论ID</th>
+              <th>相册ID</th>
+              <th>评论内容</th>
+              <th>评论状态</th>
+              <th>评论时间</th>
+              <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(remark,index) in remarkList">
+              <td>{{index+1}}</td>
+              <td>{{remark.remarkId}}</td>
+              <td>{{remark.albumId}}</td>
+              <td>{{remark.remarkInfo}}</td>
+              <td>{{remark.remarkStatue == 1 ? '审核完成' : '等待审核'}}</td>
+              <td>{{remark.commentDate}}</td>
+              <td>
+                <button class="btn btn-danger" @click="deleteRemark(remark.remarkId)">删除</button>
+                <button class="btn btn-primary" @click="updateRemark(remark.remarkId)">有效或禁用</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </main>
+    </div>
+  </div>
+  <script src="/js/admin.js"></script>
+
+  <!-- FOOTER -->
+  <!--  <footer class="container">-->
+  <!--    &lt;!&ndash;         <p class="float-right"><a href="#">Back to top</a></p> &ndash;&gt;-->
+  <!--    <p>&copy; 2017-2022 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>-->
+  <!--  </footer>-->
+</main>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+
+</body>
+</html>

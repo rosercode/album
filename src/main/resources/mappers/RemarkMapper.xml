@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cool.wangshuo.album.mapper.RemarkMapper">
+
+    <resultMap type="cool.wangshuo.album.entity.RemarkEntity" id="AlbumDbReviewMap">
+        <result property="remarkId" column="remarkId" jdbcType="INTEGER"/>
+        <result property="albumId" column="albumId" jdbcType="INTEGER"/>
+        <result property="remarkInfo" column="remarkInfo" jdbcType="VARCHAR"/>
+        <result property="remarkStatue" column="remarkStatue" jdbcType="INTEGER"/>
+        <result property="commentDate" column="commentDate" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="queryAll" resultType="com.alibaba.fastjson.JSONObject">
+        select
+            remarkId, albumId, userId, remarkInfo, remarkStatue, commentDate
+        from album_db_remark
+    </select>
+
+    <select id="queryById" resultMap="AlbumDbReviewMap">
+        select
+            remarkId, albumId, userId, remarkInfo, remarkStatue, commentDate
+        from album_db_remark
+        where remarkId = #{remarkId}
+    </select>
+
+    <!--查询-->
+    <select id="queryByAlbumId" resultMap="AlbumDbReviewMap">
+        select
+            remarkId, albumId, userId, remarkInfo, remarkStatue, commentDate
+        from album_db_remark
+        where albumId = #{albumId} and remarkStatue = 1
+    </select>
+
+    <!--连表查询：查询指定条件的所有数据-->
+    <select id="queryAllByLimit" resultType="com.alibaba.fastjson.JSONObject">
+        select
+            remark.remarkId, remark.albumId, remark.userId, user.userName,remark.remarkInfo, remark.remarkStatue, remark.commentDate
+        from album_db_remark remark
+        left join album_db_user user on remark.`userId` = user.userId
+        <where>
+            <if test="remarkId != null">
+                and remark.remarkId = #{remarkId}
+            </if>
+            <if test="albumId != null">
+                and remark.albumId = #{albumId}
+            </if>
+            <if test="userId != null">
+                and remark.userId = #{userId}
+            </if>
+            <if test="remarkInfo != null and remarkInfo != ''">
+                and remark.remarkInfo = #{remarkInfo}
+            </if>
+            <if test="remarkStatue != null">
+                and remark.remarkStatue = #{remarkStatue}
+            </if>
+            <if test="commentDate != null">
+                and remark.commentDate = #{commentDate}
+            </if>
+        </where>
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(1)
+        from album_db_remark
+        <where>
+            <if test="remarkId != null">
+                and remarkId = #{remarkId}
+            </if>
+            <if test="albumId != null">
+                and albumId = #{albumId}
+            </if>
+            <if test="userId != null">
+                and userId = #{userId}
+            </if>
+            <if test="remarkInfo != null and remarkInfo != ''">
+                and remarkInfo = #{remarkInfo}
+            </if>
+            <if test="remarkStatue != null">
+                and remarkStatue = #{remarkStatue}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="" useGeneratedKeys="true">
+        insert into album_db_remark(remarkId, albumId, userId, remarkInfo, remarkStatue, commentDate)
+        values (#{remarkId}, #{albumId}, #{userId}, #{remarkInfo}, #{remarkStatue},now())
+    </insert>
+
+    <insert id="insertBatch" keyProperty="" useGeneratedKeys="true">
+        insert into album_db_remark(remarkId, albumId, userId, remarkInfo, remarkStatue, commentDate)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.remarkId}, #{entity.albumId}, #{entity.userId}, #{entity.remarkInfo}, #{entity.remarkStatue},now())
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="" useGeneratedKeys="true">
+        insert into album_db_remark(remarkId, albumId, userId, remarkInfo, remarkStatue, commentDate)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.remarkId}, #{entity.albumId},  #{entity.userId}, #{entity.remarkInfo}, #{entity.remarkStatue},  #{entity.commentDate})
+        </foreach>
+        on duplicate key update
+        remarkId = values(remarkId),
+        albumId = values(albumId),
+        userId = values(userId),
+        remarkInfo = values(remarkInfo),
+        remarkStatue = values(remarkStatue)
+        commentDate = values(commentDate)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update album_db_remark
+        <set>
+            <if test="remarkId != null">
+                remarkId = #{remarkId},
+            </if>
+            <if test="albumId != null">
+                albumId = #{albumId},
+            </if>
+            <if test="userId != null">
+                userId = #{userId},
+            </if>
+            <if test="remarkInfo != null and remarkInfo != ''">
+                remarkInfo = #{remarkInfo},
+            </if>
+            <if test="remarkStatue != null">
+                remarkStatue = #{remarkStatue},
+            </if>
+            <if test="remarkStatue != null">
+                remarkStatue = #{remarkStatue},
+            </if>
+            <if test="remarkStatue != null">
+                commentDate = #{commentDate},
+            </if>
+        </set>
+        where remarkId = #{remarkId}
+    </update>
+
+    <!--通过主键删除评论内容-->
+    <delete id="deleteById">
+        delete from album_db_remark where  remarkId = #{remarkId}
+    </delete>
+
+</mapper>
+

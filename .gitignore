@@ -7,6 +7,6 @@ target/
 *.iws
 *.iml
 *.ipr
-1.md
+local.md
 .vscode
 mkdocs.yml

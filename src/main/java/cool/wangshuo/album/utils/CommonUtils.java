@@ -1,6 +1,5 @@
 package cool.wangshuo.album.utils;
 
-import io.netty.handler.codec.http.HttpResponse;
 import net.coobird.thumbnailator.Thumbnails;
 
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +16,10 @@ import java.nio.file.Paths;
 
 public class CommonUtils {
 
+    /**
+     * 公共的方法 生成纯数字的主键 ID
+     * @return
+     */
     public static String uuid() {
         int hashCode = java.util.UUID.randomUUID().toString().hashCode();
         if (hashCode < 0) {
@@ -46,10 +49,11 @@ public class CommonUtils {
         return type;
     }
 
-
     /**
-     * 展示图片 设置响应流
-     * 1. 设置响应的 MIME（文件类型）
+     * 展示图片 设置响应流 <br>
+     * 1. 设置响应的 MIME（文件类型） <br>
+     * 2. 向响应流中写入图片字节流 <br>
+     * 3. 更加参数考虑是否对图片进行缩放 <br><br>
      * @param response http 响应
      * @param imagePath 图片的路径
      * @param scale 图片的缩放情况

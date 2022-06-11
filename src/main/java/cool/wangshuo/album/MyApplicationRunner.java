@@ -24,17 +24,23 @@ public class MyApplicationRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        log.info("项目启动完成，开始检查目录是否存在");
+
         File imagePaceFile = new File(AlbumApplication.imagePace);
         File imagePathFile = new File(AlbumApplication.imagePath);
 
         if (!imagePathFile.exists()){
             log.info("路径: " + imagePaceFile.getAbsolutePath()+" 不存在，创建目录");
             imagePathFile.mkdirs();
+        }else{
+            log.info("路径: " + imagePaceFile.getAbsolutePath()+" 存在");
         }
 
         if (!imagePathFile.exists()){
             log.info("路径: " + imagePathFile.getAbsolutePath()+" 不存在，创建目录");
             imagePathFile.mkdirs();
+        }else{
+            log.info("路径: " + imagePathFile.getAbsolutePath()+" 存在");
         }
     }
 }

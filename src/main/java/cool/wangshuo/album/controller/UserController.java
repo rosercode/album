@@ -97,13 +97,13 @@ public class UserController {
 
     /**
      * 用户注册 Api 接口
-     * @param nickname
-     * @param account
-     * @param passwd1
-     * @param passwd2
-     * @param phone
-     * @param address
-     * @param qqCode
+     * @param nickname  昵称
+     * @param account   账号
+     * @param passwd1   第一次的密码
+     * @param passwd2   第二次的密码
+     * @param phone     手机号码
+     * @param address   地址信息
+     * @param qqCode    QQ号码
      * @return
      */
     @RequestMapping(value = "/register.api")

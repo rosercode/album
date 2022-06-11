@@ -4,19 +4,25 @@ import com.alibaba.fastjson.JSONObject;
 import cool.wangshuo.album.AlbumApplication;
 import cool.wangshuo.album.annotation.NeedLoginAuth;
 import cool.wangshuo.album.entity.AlbumEntity;
+import cool.wangshuo.album.entity.AlbumPictureEntity;
 import cool.wangshuo.album.entity.AlbumUserEntity;
 import cool.wangshuo.album.model.domain.CommonResponse;
 import cool.wangshuo.album.service.AlbumService;
 import cool.wangshuo.album.utils.CommonUtils;
 import lombok.extern.slf4j.Slf4j;
+import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -213,5 +219,19 @@ public class AlbumController {
         response.setCode(1);
         response.setMessage("删除完成");
         return response;
+    }
+
+    /**
+     * 展示相册的封面图片
+     * Bug:需要增加相册是否公开和审核通过的判断（后面修改）
+     * @param faceImageName
+     * @param response
+     * @param scale
+     * @throws IOException
+     */
+    @GetMapping(value = "/one")
+    public void showPhoto(Integer faceImageName, HttpServletResponse response, Float scale) throws IOException {
+        String imagePath = AlbumApplication.imagePace + File.separator + faceImageName;
+        CommonUtils.showPhoto(response,imagePath,scale);
     }
 }

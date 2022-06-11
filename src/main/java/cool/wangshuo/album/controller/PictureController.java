@@ -115,49 +115,15 @@ public class PictureController {
          *    2.2 管理员的后台可以被展示
          *    其它情况下不能展示
          */
-
-
         AlbumPictureEntity picture = pictureService.queryById(photoId,null);
-        String filepath = AlbumApplication.imagePath + File.separator + picture.getPhotoName();
-        System.out.println(filepath);
-        String file = (filepath.split("/"))[filepath.split("/").length-1];
+        String filepath = AlbumApplication.imagePath + File.separator + picture.getPhotoName(); // 图片的路径信息
+        File imageFile = new File(filepath);
 
-        File file1 = new File(filepath);
-
-        if (!file1.exists()){
+        if (!imageFile.exists()){
             this.response.setMessage("文件不存在");
             return;
         }
-
-        // 根据文件名称获取文件的MIME类型，用于指定ContentType
-        String mimeType = CommonUtils.getContentType(filepath);
-        response.setContentType(mimeType);
-
-        // 设定Content-disposition属性值，inline 表示在浏览器页面打开显示，attachment 表示以附件的形式下载
-        response.setHeader("Content-disposition", "inline;filename="+ URLEncoder.encode(file, "UTF-8"));
-        //如果文件名存在中文，要使用 URLEncoder 进行重新编码
-
-        FileInputStream fis = new FileInputStream(filepath);
-
-        byte[] in = new byte[2048];
-
-        if (scale!=null){
-            ByteArrayOutputStream out1 = new ByteArrayOutputStream();
-            Thumbnails.of(file)
-                    .scale(0.8)
-                    .toOutputStream(out1);
-            response.getOutputStream().write(out1.toByteArray());
-            return;
-        }
-
-        while (fis.read(in, 0, in.length) != -1) {
-            response.getOutputStream().write(in);
-        }
-        //向响应的输出流中写入内容
-        response.getOutputStream().flush(); //送出
-//        fis.close();
-        return;
-
+        CommonUtils.showPhoto(response,filepath,scale);
     }
 
     /**

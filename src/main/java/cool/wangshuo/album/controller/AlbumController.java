@@ -222,9 +222,8 @@ public class AlbumController {
     }
 
     /**
-     * 展示相册的封面图片
-     * Bug1:需要增加相册是否公开和审核通过的判断（后面修改）
-     * Bug2:
+     * 展示相册的封面图片 <br>
+     * Bug1:需要增加相册是否公开和审核通过的判断（后面修改） <br>
      * @param faceImageName
      * @param response
      * @param scale
@@ -233,6 +232,12 @@ public class AlbumController {
     @GetMapping(value = "/face/{faceImageName}")
     public void showAlbumFace(@PathVariable String faceImageName, HttpServletResponse response, Float scale) throws IOException {
         String imagePath = AlbumApplication.imagePace + File.separator + faceImageName;
-        CommonUtils.showPhoto(response,imagePath,scale);
+
+        if (!new File(imagePath).exists()){
+            response.sendError(404);
+        }else{
+            CommonUtils.showPhoto(response,imagePath,scale);
+        }
+
     }
 }

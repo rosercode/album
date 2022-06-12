@@ -129,10 +129,10 @@ new Vue({
                     // 总是会执行
                 });
         },
-        // 更新相册信息
+        // 管理员审核相册信息
         updateAlbum:function (albumId) {
             const that = this;
-            axios.get('/album/updateStatus?albumId='+albumId)
+            axios.get('/album/verifyAlbum?albumId='+albumId)
                 .then(function (response) {
                     // 处理成功情况
                     that.$options.methods.hello2()

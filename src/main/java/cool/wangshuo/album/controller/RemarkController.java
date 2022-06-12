@@ -156,14 +156,16 @@ public class RemarkController {
         return response;
     }
 
+
     /**
-     * 删除评论 【需要管理员权限】
+     * 删除评论 【需要管理员权限】 <br>
+     * PS:评论的拥有者不能删除评论，只有管理员可以删除 <br>
+     *
      * @param remarkId
      * @return
      */
     @RequestMapping(value = "delete")
     @AdminAuth
-    @NeedLoginAuth
     public CommonResponse deleteRemark(Integer remarkId){
 
         response.setCode(-1);

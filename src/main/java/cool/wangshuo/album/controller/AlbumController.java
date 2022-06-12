@@ -184,13 +184,13 @@ public class AlbumController {
 
 
     /**
-     * 更新相册的状态： 审核中 -> 审核完成  或者  审核完成 -> 审核中
+     * 更新相册的状态 审核相册： 审核中 -> 审核完成  或者  审核完成 -> 审核中
      * @param albumId
      * @return
      */
-    @GetMapping(value = "/updateStatus")
+    @GetMapping(value = "/verifyAlbum")
     @AdminAuth
-    public CommonResponse updateStatus(Integer albumId) {
+    public CommonResponse verifyAlbum(Integer albumId) {
         AlbumEntity album = this.albumService.queryById(albumId);
         album.setAlbumStatue(album.getAlbumStatue() == 1 ? 0 : 1);
         int count = albumService.update(album);

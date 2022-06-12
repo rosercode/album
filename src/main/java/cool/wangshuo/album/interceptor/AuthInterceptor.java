@@ -52,7 +52,6 @@ public class AuthInterceptor implements HandlerInterceptor {
 
         // 拦截后端接口
         if (handler instanceof HandlerMethod) {
-
             NeedLoginAuth auth1 = ((HandlerMethod) handler).getMethod().getAnnotation(NeedLoginAuth.class);
             AdminAuth auth2 = ((HandlerMethod) handler).getMethod().getAnnotation(AdminAuth.class);
             if (auth1 != null || auth2 != null) {
@@ -61,26 +60,25 @@ public class AuthInterceptor implements HandlerInterceptor {
                  * 请求的资源包含有 NeedLoginAuth 这个注解
                  * 下一步判断用户是否完成登录
                  */
+                response.setCharacterEncoding("UTF-8");
+                response.setContentType("application/json; charset=utf-8");
+                CommonResponse response1 = new CommonResponse();
+                response1.setCode(-2);
                 if (user == null) {
-                    log.info("用户请求的资源需要登录，但是 当前用户尚未登录");
+                    log.info("用户请求的接口需要登录，但是 当前用户尚未登录");
                     // 访问的资源需要登录，请跳转到登录界面
-                    response.setCharacterEncoding("UTF-8");
-                    response.setContentType("application/json; charset=utf-8");
-                    CommonResponse response1 = new CommonResponse();
-                    response1.setCode(-2);
                     response1.setMessage("请先完成登录");
                     response.getWriter().println(new Gson().toJson(response1));
-//                    response.reset();
                     return false;
-                    /**
-                     * @date 2022-05-01 20:43:24
-                     * ???? 为什么会出现这个问题
-                     * @link https://www.cnblogs.com/qingmuchuanqi48/p/12079415.html
-                     */
-                } else {
-                    log.info("用户请求的资源需要登录，当前用户已经登录，用户名为 {}，通过", user.getUsername());
-                    return true;
                 }
+                if (auth2!=null && user.getUserRight() == 0 ){
+                    log.info("用户请求的接口需要管理员泉下，但是 当前用户不是管理员");
+                    response1.setMessage("没有权限访问该接口（No permission to access this interface）");
+                    response.getWriter().println(new Gson().toJson(response1));
+                    return false;
+                }
+                log.info("用户请求的资源需要登录，当前用户已经登录，用户名为 {}，通过", user.getUsername());
+                return true;
             } else {
                 log.info("用户请求的资源不需要登录");
                 return true;

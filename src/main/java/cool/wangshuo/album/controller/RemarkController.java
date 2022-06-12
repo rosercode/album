@@ -70,6 +70,8 @@ public class RemarkController {
 
 
     /**
+     * 获取所有的评论信息
+     * bug1： 登录用户无法获取自己的评论信息列表 (前端不需要这个判断) 不一定是 Bug
      *
      * @param remark
      * @return
@@ -137,7 +139,6 @@ public class RemarkController {
      * @return
      */
     @GetMapping(value = "/updateStatus")
-    @NeedLoginAuth
     @AdminAuth
     public CommonResponse updateRemarkStatus(Integer remarkId) {
         RemarkEntity remark = this.remarkService.queryById(remarkId);

@@ -40,13 +40,11 @@ public class AlbumEntity implements Serializable {
      * 相册权限、1可访问，0不可访问 用户设定
      */
     private Integer albumRight;
-
     /**
      * 相册创建时间
      */
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")  // 格式化Mybatis返回的Date时间
     private Timestamp albumTime;
-
     /**
      * 相册封面
      */

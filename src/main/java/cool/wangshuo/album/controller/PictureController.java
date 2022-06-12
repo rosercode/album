@@ -1,6 +1,7 @@
 package cool.wangshuo.album.controller;
 
 import cool.wangshuo.album.AlbumApplication;
+import cool.wangshuo.album.annotation.AdminAuth;
 import cool.wangshuo.album.annotation.NeedLoginAuth;
 import cool.wangshuo.album.entity.AlbumPictureEntity;
 import cool.wangshuo.album.entity.AlbumUserEntity;
@@ -229,7 +230,7 @@ public class PictureController {
      * @return
      */
     @GetMapping(value = "/delete")
-    @NeedLoginAuth
+    @AdminAuth
     public CommonResponse delete(Integer photoId) {
 
         response.setCode(-1);

@@ -2,6 +2,7 @@ package cool.wangshuo.album.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import cool.wangshuo.album.AlbumApplication;
+import cool.wangshuo.album.annotation.AdminAuth;
 import cool.wangshuo.album.annotation.NeedLoginAuth;
 import cool.wangshuo.album.entity.AlbumEntity;
 import cool.wangshuo.album.entity.AlbumPictureEntity;
@@ -188,7 +189,7 @@ public class AlbumController {
      * @return
      */
     @GetMapping(value = "/updateStatus")
-    @NeedLoginAuth
+    @AdminAuth
     public CommonResponse updateStatus(Integer albumId) {
         AlbumEntity album = this.albumService.queryById(albumId);
         album.setAlbumStatue(album.getAlbumStatue() == 1 ? 0 : 1);

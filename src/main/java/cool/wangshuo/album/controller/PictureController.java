@@ -191,14 +191,13 @@ public class PictureController {
         return response;
     }
 
-
     /**
-     * 更新相册的状态： 审核中 -> 审核完成  或者  审核完成 -> 审核中
+     * 更新相册的状态（管理员审核相册）： 审核中 -> 审核完成  或者  审核完成 -> 审核中
      * @param photoId
      * @return
      */
     @GetMapping(value = "/updateStatus")
-    @NeedLoginAuth
+    @AdminAuth
     public CommonResponse updateStatus(Integer photoId) {
 
         response.setCode(-1);

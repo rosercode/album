@@ -2,6 +2,7 @@ package cool.wangshuo.album.interceptor;
 
 
 import com.google.gson.Gson;
+import cool.wangshuo.album.annotation.AdminAuth;
 import cool.wangshuo.album.annotation.NeedLoginAuth;
 import cool.wangshuo.album.entity.AlbumUserEntity;
 import cool.wangshuo.album.model.domain.CommonResponse;
@@ -52,8 +53,9 @@ public class AuthInterceptor implements HandlerInterceptor {
         // 拦截后端接口
         if (handler instanceof HandlerMethod) {
 
-            NeedLoginAuth auth = ((HandlerMethod) handler).getMethod().getAnnotation(NeedLoginAuth.class);
-            if (auth != null) {
+            NeedLoginAuth auth1 = ((HandlerMethod) handler).getMethod().getAnnotation(NeedLoginAuth.class);
+            AdminAuth auth2 = ((HandlerMethod) handler).getMethod().getAnnotation(AdminAuth.class);
+            if (auth1 != null || auth2 != null) {
                 log.info("用户请求的资源需要登录");
                 /**
                  * 请求的资源包含有 NeedLoginAuth 这个注解

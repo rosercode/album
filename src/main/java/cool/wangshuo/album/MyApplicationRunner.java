@@ -29,9 +29,9 @@ public class MyApplicationRunner implements ApplicationRunner {
         File imagePaceFile = new File(AlbumApplication.imagePace);
         File imagePathFile = new File(AlbumApplication.imagePath);
 
-        if (!imagePathFile.exists()){
+        if (!imagePaceFile.exists()){
             log.info("路径: " + imagePaceFile.getAbsolutePath()+" 不存在，创建目录");
-            imagePathFile.mkdirs();
+            imagePaceFile.mkdirs();
         }else{
             log.info("路径: " + imagePaceFile.getAbsolutePath()+" 存在");
         }

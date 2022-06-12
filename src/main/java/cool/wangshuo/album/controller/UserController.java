@@ -162,11 +162,6 @@ public class UserController {
     public CommonResponse deleteUser(Integer userId) {
         response.setCode(-1);
 
-        if (this.user.getUserRight() == 0){
-            response.setMessage("用户没有权限删除");
-            return response;
-        }
-
         log.info("客户端【{}】删除 userId 为 {} 的用户","", userId);
         userService.delete(userId);
         return response;

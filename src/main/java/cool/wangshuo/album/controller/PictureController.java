@@ -200,12 +200,6 @@ public class PictureController {
     @AdminAuth
     public CommonResponse updateStatus(Integer photoId) {
 
-        response.setCode(-1);
-        if (this.user == null) {
-            response.setMessage("请先完成登录");
-            return response;
-        }
-
         AlbumPictureEntity picture = this.pictureService.queryById(photoId,null);
         if (picture == null){
             response.setMessage("数据查询失败");

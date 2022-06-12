@@ -159,7 +159,6 @@ public class UserController {
      */
     @RequestMapping(value = "/delete")
     @AdminAuth
-    @NeedLoginAuth
     public CommonResponse deleteUser(Integer userId) {
         response.setCode(-1);
 

@@ -32,14 +32,18 @@ public class AlbumServiceImp implements AlbumService {
        return albumMapper.queryById(albumId);
     }
 
+
     /**
      * 限制过滤条件、查询符合条件的相册列表
      * @param album
+     * @param pageNum
+     * @param pageSize
      * @return
      */
     @Override
-    public List<JSONObject> queryAllByLimit(AlbumEntity album){
-        return albumMapper.queryAllByLimit(album);
+    public List<JSONObject> queryAllByLimit(AlbumEntity album, Integer pageNum, Integer pageSize){
+        int offset = (pageNum-1) * pageSize;
+        return albumMapper.queryAllByLimit(album, offset, pageSize);
     }
 
     @Override

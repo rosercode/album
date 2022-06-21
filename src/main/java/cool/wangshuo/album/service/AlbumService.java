@@ -16,7 +16,7 @@ public interface AlbumService {
 
     public AlbumEntity queryById(Integer albumId);
 
-    public List<JSONObject> queryAllByLimit(AlbumEntity album);
+    public List<JSONObject> queryAllByLimit(AlbumEntity album, Integer pageNum, Integer pageSize);
 
     public List<JSONObject> queryByPage(Integer page, Integer limit);
 

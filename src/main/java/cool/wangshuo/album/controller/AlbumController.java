@@ -129,14 +129,17 @@ public class AlbumController {
         }
      */
 
+
     /**
      * 获取符合条件的、所有的相册信息
      * @param albumFilter
      * @param source 来源 1 表示 前台 2 表示后台
+     * @param pageNum
+     * @param pageSize
      * @return
      */
     @GetMapping(value = "/queryAll")
-    public List<JSONObject> queryAll(AlbumEntity albumFilter,Integer source) {
+    public List<JSONObject> queryAll(AlbumEntity albumFilter,Integer source, Integer pageNum, Integer pageSize) {
 
         if(this.user == null){
             log.info("【未登录用户】查询所有相册列表信息");
@@ -155,7 +158,7 @@ public class AlbumController {
         if (source == 1){
             albumFilter.setAlbumRight(1);
             albumFilter.setAlbumStatue(1);
-            return this.albumService.queryAllByLimit(albumFilter);
+            return this.albumService.queryAllByLimit(albumFilter, pageNum, pageSize);
         }
 
 
@@ -175,11 +178,11 @@ public class AlbumController {
         // 后台一般用户
         if (this.user!=null && this.user.getUserRight() == 0){
             albumFilter.setUserId(this.user.getUserId());
-            return this.albumService.queryAllByLimit(albumFilter);
+            return this.albumService.queryAllByLimit(albumFilter, pageNum, pageSize);
         }
 
         // 管理员
-        return this.albumService.queryAllByLimit(null);
+        return this.albumService.queryAllByLimit(null, pageNum, pageSize);
     }
 
 

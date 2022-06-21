@@ -39,7 +39,12 @@ public interface PictureMapper {
     List<AlbumPictureEntity> queryAll();
 
 
-    List<AlbumPictureEntity> queryAllByLimit(AlbumPictureEntity picture);
+    List<AlbumPictureEntity> queryAllByLimit(
+                @Param("picture") AlbumPictureEntity pictureFilter,
+                @Param("offset") Integer offset,
+                @Param("length") Integer length
+    );
+
 
     /**
      * 统计总行数

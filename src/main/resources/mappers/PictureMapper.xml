@@ -45,31 +45,34 @@
           photoId, albumId, photoName, photoStatue, photoRight, photoIntro, photoUrl
         from album_db_picture
         <where>
-            <if test="photoId != null">
-                and photoId = #{photoId}
+            <if test="picture.photoId != null">
+                and photoId = #{picture.photoId}
             </if>
-            <if test="albumId != null">
-                and albumId = #{albumId}
+            <if test="picture.albumId != null">
+                and albumId = #{picture.albumId}
             </if>
-            <if test="photoUserId != null">
-                and photoUserId = #{photoUserId}
+            <if test="picture.photoUserId != null">
+                and photoUserId = #{picture.photoUserId}
             </if>
-            <if test="photoName != null and photoName != ''">
-                and photoName = #{photoName}
+            <if test="picture.photoName != null and picture.photoName != ''">
+                and photoName = #{picture.photoName}
             </if>
-            <if test="photoStatue != null">
-                and photoStatue = #{photoStatue}
+            <if test="picture.photoStatue != null">
+                and photoStatue = #{picture.photoStatue}
             </if>
-            <if test="photoRight != null">
-                and photoRight = #{photoRight}
+            <if test="picture.photoRight != null">
+                and photoRight = #{picture.photoRight}
             </if>
-            <if test="photoIntro != null and photoIntro != ''">
-                and photoIntro = #{photoIntro}
+            <if test="picture.photoIntro != null and picture.photoIntro != ''">
+                and photoIntro = #{picture.photoIntro}
             </if>
-            <if test="photoUrl != null and photoUrl != ''">
+            <if test="picture.photoUrl != null and picture.photoUrl != ''">
                 and photoUrl = #{photoUrl}
             </if>
         </where>
+        <if test="offset != null and length != null ">
+            limit #{offset}, #{length};
+        </if>
     </select>
 
     <!--统计总行数-->

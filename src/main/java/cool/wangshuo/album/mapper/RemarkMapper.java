@@ -23,7 +23,7 @@ public interface RemarkMapper {
     List<JSONObject> queryAll();
 
 
-    List<JSONObject> queryAllByLimit(RemarkEntity remark);
+    List<JSONObject> queryAllByLimit(@Param("remark") RemarkEntity remarkFilter, @Param("offset") Integer offset, @Param("length") Integer length);
 
     /**
      * 获取指定 ID 的评论信息

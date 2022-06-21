@@ -38,25 +38,26 @@
         from album_db_remark remark
         left join album_db_user user on remark.`userId` = user.userId
         <where>
-            <if test="remarkId != null">
-                and remark.remarkId = #{remarkId}
+            <if test="remark.remarkId != null">
+                and remark.remarkId = #{remark.remarkId}
             </if>
-            <if test="albumId != null">
-                and remark.albumId = #{albumId}
+            <if test="remark.albumId != null">
+                and remark.albumId = #{remark.albumId}
             </if>
-            <if test="userId != null">
-                and remark.userId = #{userId}
+            <if test="remark.userId != null">
+                and remark.userId = #{remark.userId}
             </if>
-            <if test="remarkInfo != null and remarkInfo != ''">
-                and remark.remarkInfo = #{remarkInfo}
+            <if test="remark.remarkInfo != null and remarkInfo != ''">
+                and remark.remarkInfo = #{remark.remarkInfo}
             </if>
-            <if test="remarkStatue != null">
-                and remark.remarkStatue = #{remarkStatue}
+            <if test="remark.remarkStatue != null">
+                and remark.remarkStatue = #{remark.remarkStatue}
             </if>
-            <if test="commentDate != null">
-                and remark.commentDate = #{commentDate}
+            <if test="remark.commentDate != null">
+                and remark.commentDate = #{remark.commentDate}
             </if>
         </where>
+        limit #{offset} ,#{length};
     </select>
 
     <!--统计总行数-->

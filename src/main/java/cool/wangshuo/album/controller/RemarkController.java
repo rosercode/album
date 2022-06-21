@@ -69,26 +69,27 @@ public class RemarkController {
      */
 
 
+
     /**
      * 获取所有的评论信息
-     * bug1： 登录用户无法获取自己的评论信息列表 (前端不需要这个判断) 不一定是 Bug
-     *
-     * @param remark
+     * bug1： 登录用户无法获取自己的评论信息列表 (前端不需要这个判断) 不一定是 Bug ：因为用户发布的评论，本身就不能够管理
+     * @param remarkFilter 过滤器
+     * @param pageNum 第几页 下标从 1 开始
+     * @param pageSize 每页的大小
      * @return
      */
     @GetMapping(value = "/queryAll")
-    public List<JSONObject> queryAll(RemarkEntity remark) {
+    public List<JSONObject> queryAll(RemarkEntity remarkFilter, Integer pageNum, Integer pageSize) {
         log.info("客户端 获取所有的评论信息");
-
 
         // 没有登录或者是一般用户的情况下，只能访问公开【审核通过】的评论
         if (this.user == null || this.user.getUserRight() == 0){
-            remark.setRemarkStatue(1);
-            return this.remarkService.queryAll(remark);
+            remarkFilter.setRemarkStatue(1);
+            return this.remarkService.queryAll(remarkFilter,pageNum,pageSize);
         }
 
         // 如果是管理员,就不进行过滤
-        return this.remarkService.queryAll(null);
+        return this.remarkService.queryAll(null, pageNum,pageSize);
     }
 
     /**

@@ -9,7 +9,6 @@ import cool.wangshuo.album.model.domain.CommonResponse;
 import cool.wangshuo.album.service.PictureService;
 import cool.wangshuo.album.utils.CommonUtils;
 import lombok.extern.slf4j.Slf4j;
-import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,9 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author wangsh
@@ -152,23 +149,26 @@ public class PictureController {
         }
      */
 
+
     /**
      * 获取所有的图片信息 <br>
      * 1. 不同身份的用户其能访问的资源不同 <br>
      * 2. 不同界面请求的响应不同
-     * @param pictureFilter
+     * @param pictureFilter pictureFilter
      * @param source
+     * @param pageNum
+     * @param pageSize
      * @return
      */
     @GetMapping(value = "/queryAll")
-    public CommonResponse queryAll(AlbumPictureEntity pictureFilter,Integer source) {
+    public CommonResponse queryAll(AlbumPictureEntity pictureFilter,Integer source, Integer pageNum, Integer pageSize) {
         response.setCode(-1);
 
         // 前台（这里不考虑用户是否登录） ，只能访问 【用户公开】 【管理员没有禁止】 的图片
         if (source == 1) {
             pictureFilter.setPhotoStatue(1);
             pictureFilter.setPhotoRight(1);
-            response.setData(this.pictureService.queryAll(pictureFilter));
+            response.setData(this.pictureService.queryAll(pictureFilter,pageNum,pageSize));
             return response;
         }
 
@@ -182,12 +182,12 @@ public class PictureController {
         // 如果已经登录，权限是一般用户
         if (this.user.getUserRight() == 0) {
             pictureFilter.setPhotoUserId(this.user.getUserId());
-            response.setData(this.pictureService.queryAll(pictureFilter));
+            response.setData(this.pictureService.queryAll(pictureFilter,pageNum,pageSize));
             return response;
         }
 
         // 如果是管理员,就不进行过滤
-        response.setData(this.pictureService.queryAll(null));
+        response.setData(this.pictureService.queryAll(null,pageNum,pageSize));
         return response;
     }
 

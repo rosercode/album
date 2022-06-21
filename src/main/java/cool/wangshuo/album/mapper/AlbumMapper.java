@@ -36,12 +36,19 @@ public interface AlbumMapper {
      */
     List<AlbumEntity> queryAll();
 
+
     /**
      *
-     * @param albumEntity
+     * @param albumEntityFilter
+     * @param offset
+     * @param length
      * @return
      */
-    List<JSONObject> queryAllByLimit(AlbumEntity albumEntity);
+    List<JSONObject> queryAllByLimit(
+            @Param("album") AlbumEntity albumEntityFilter,
+            @Param("offset") Integer offset,
+            @Param("length") Integer length
+    );
 
 
     /**

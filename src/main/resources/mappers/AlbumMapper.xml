@@ -45,29 +45,32 @@
         from album_db_album album
         left join album_db_user user on album.`userId` = user.userId
         <where>
-            <if test="albumId != null">
-                and album.albumId = #{albumId}
+            <if test="album.albumId != null">
+                and album.albumId = #{album.albumId}
             </if>
-            <if test="userId != null">
-                and album.userId = #{userId}
+            <if test="album.userId != null">
+                and album.userId = #{album.userId}
             </if>
-            <if test="albumName != null and albumName != ''">
-                and album.albumName = #{albumName}
+            <if test="album.albumName != null and album.albumName != ''">
+                and album.albumName = #{album.album.albumName}
             </if>
-            <if test="albumStatue != null">
-                and album.albumStatue = #{albumStatue}
+            <if test="album.albumStatue != null">
+                and album.albumStatue = #{album.albumStatue}
             </if>
-            <if test="albumRight != null">
-                and album.albumRight = #{albumRight}
+            <if test="album.albumRight != null">
+                and album.albumRight = #{album.albumRight}
             </if>
-            <if test="albumTime != null">
-                and album.albumTime = #{albumTime}
+            <if test="album.albumTime != null">
+                and album.albumTime = #{album.albumTime}
             </if>
-            <if test="albumFace != null and albumFace!=''">
-                and album.albumFace = #{albumFace}
+            <if test="album.albumFace != null and album.albumFace!=''">
+                and album.albumFace = #{album.albumFace}
             </if>
         </where>
         ORDER BY `albumTime` DESC
+        <if test="offset != null and length != null ">
+            limit #{offset}, #{length}
+        </if>
     </select>
 
     <!--统计总行数-->
@@ -109,7 +112,14 @@
         insert into album_db_album(userId, albumName, albumStatue, albumRight, albumTime, albumFace)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.userId}, #{entity.albumName}, #{entity.albumStatue}, #{entity.albumRight}, now(), #{albumFace})
+            (
+                 #{entity.userId},
+                 #{entity.albumName},
+                 #{entity.albumStatue},
+                 #{entity.albumRight},
+                 now(),
+                 #{albumFace}
+             )
         </foreach>
     </insert>
 

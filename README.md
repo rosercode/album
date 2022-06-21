@@ -2,6 +2,13 @@
 
 基于 springBoot 的网络相册管理系统
 
+## 项目环境
+
+- Maven3.3.9
+- JDK8
+- MySQL8
+- SpringBoot + SpringMVC  + MyBatis
+
 ## 项目架构
 
 项目整体使用前后端分离的机制，前端使用 Vue 来渲染界面，后端返回 Json 数据

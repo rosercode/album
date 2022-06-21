@@ -61,9 +61,14 @@ public class AlbumController {
         this.user = (AlbumUserEntity) session.getAttribute("user");
     }
 
+
     /**
-     * 添加一条相册信息 【需要登录】
-     * @param album
+     * 添加一条相册信息 【需要登录】 <br>
+     * bug：修改图片文件名的生成，图片名称后端生成，不能通过前端上传的数据来设定，因为可能重复。PS：最简单使用主键名称来 <br>
+     * 下一步：增加一步数据校验 -- 对前端上传的图片进行安全性验证。<br>  <time datetime="2022-06-21 21:52:20">时间戳</time>
+     *
+     * @param file 上传的文件
+     * @param album 相册的 id
      * @return
      */
     @PostMapping(value = "/insert")
@@ -71,14 +76,15 @@ public class AlbumController {
     public CommonResponse insert(@RequestParam("imageFile") MultipartFile file, AlbumEntity album) {
         response.setCode(-1);
 
+        // 对前端传来数据的检查
         if (album.getAlbumName() == null || album.getAlbumName().equals("")){
             response.setMessage("数据插入失败，相册名不能为空");
             return response;
         }
 
+
         final String albumFace = file.getOriginalFilename(); // 获取封面图片名称
-        String imagePath = AlbumApplication.imagePace + File.separator + albumFace;
-        System.out.println(imagePath);
+        String imagePath = AlbumApplication.imagePace + File.separator + albumFace; // 图片的路径
         try {
             // 保存文件
             file.transferTo(new java.io.File(imagePath));
@@ -89,7 +95,7 @@ public class AlbumController {
         album.setAlbumFace(albumFace);
         album.setAlbumStatue(0); // 相册状态 默认禁用
 
-        album.setUserId(this.user.getUserId());
+        album.setUserId(this.user.getUserId()); // PS：注意，相册的所属的设定只能通过在 session 中的数据来确定。
         System.out.println(album);
         Integer count = albumService.insert(album);
         if (count != -1) {
@@ -131,11 +137,15 @@ public class AlbumController {
 
 
     /**
-     * 获取符合条件的、所有的相册信息
+     * 获取符合条件的、所有的相册信息 <br>
+     * 1. 有权限展示的数据 <br>
+     * 2. 通过过滤的数据 <br>
+     * PS：后面删除 source 这个参数，修改成通过 albumFilter 这个  JavaBean 过滤查询的数据
+     *
      * @param albumFilter
      * @param source 来源 1 表示 前台 2 表示后台
-     * @param pageNum
-     * @param pageSize
+     * @param pageNum 每页的页数
+     * @param pageSize 页的大小
      * @return
      */
     @GetMapping(value = "/queryAll")

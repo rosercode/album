@@ -107,14 +107,23 @@
     <!--新增所有列-->
     <insert id="insert" keyProperty="" useGeneratedKeys="true">
         insert into album_db_picture(photoId, albumId, photoUserId, photoName, photoStatue, photoRight, photoIntro, photoUrl)
-        values (#{photoId}, #{albumId}, #{photoUserId}, #{photoName}, #{photoStatue}, #{photoRight}, #{photoIntro}, #{photoUrl})
+        values (
+                #{photoId},
+                #{albumId},
+                #{photoUserId},
+                #{photoName},
+                #{photoStatue},
+                #{photoRight},
+                #{photoIntro},
+                #{photoUrl}
+            )
     </insert>
 
     <insert id="insertBatch" keyProperty="" useGeneratedKeys="true">
         insert into album_db_picture(photoId, albumId, photoName, photoStatue, photoRight, photoIntro, photoUrl)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.photoId}, #{entity.albumId}, #{entity.photoName}, #{entity.photoStatue}, #{entity.photoRight}, #{entity.photoIntro}, #{entity.photoUrl})
+            (#{entity.photoId}, #{entity.albumId}, #{entity.photoName}, #{entity.photoStatue}, #{entity.photoRight}, #{entity.photoIntro}, #{entity.photoUrl})
         </foreach>
     </insert>
 

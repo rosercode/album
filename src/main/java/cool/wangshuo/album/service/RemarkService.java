@@ -20,7 +20,7 @@ public interface RemarkService {
 
     public List<JSONObject> queryAll();
 
-    public List<JSONObject> queryAll(RemarkEntity remark);
+    public List<JSONObject> queryAll(RemarkEntity remarkFilter, Integer pageNum, Integer pageSize);
 
     public Integer updateRemark(RemarkEntity remark);
 

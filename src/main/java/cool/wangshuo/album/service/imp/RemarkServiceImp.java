@@ -40,8 +40,10 @@ public class RemarkServiceImp implements RemarkService {
     }
 
     @Override
-    public List<JSONObject> queryAll(RemarkEntity remark) {
-        return remarkMapper.queryAllByLimit(remark);
+    public List<JSONObject> queryAll(RemarkEntity remarkFilter, Integer pageNum, Integer pageSize) {
+        int offset = (pageNum-1) * pageSize;
+
+        return remarkMapper.queryAllByLimit(remarkFilter,offset, pageSize);
     }
 
     @Override

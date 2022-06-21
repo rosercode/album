@@ -122,7 +122,15 @@
         insert into album_db_picture(photoId, albumId, photoName, photoStatue, photoRight, photoIntro, photoUrl)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.photoId}, #{entity.albumId}, #{entity.photoName}, #{entity.photoStatue}, #{entity.photoRight}, #{entity.photoIntro}, #{entity.photoUrl})
+            (
+                 #{entity.photoId},
+                 #{entity.albumId},
+                 #{entity.photoName},
+                 #{entity.photoStatue},
+                 #{entity.photoRight},
+                 #{entity.photoIntro},
+                 #{entity.photoUrl}
+             )
         </foreach>
         on duplicate key update
         photoId = values(photoId),

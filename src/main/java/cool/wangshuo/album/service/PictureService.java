@@ -20,7 +20,7 @@ public interface PictureService {
 
     public Integer update(AlbumPictureEntity picture);
 
-    public List<AlbumPictureEntity> queryAll(AlbumPictureEntity picture);
+    public List<AlbumPictureEntity> queryAll(AlbumPictureEntity picture, Integer pageNum, Integer pageSize);
 
     public Integer delete(Integer photoId);
 }

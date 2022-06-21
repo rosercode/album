@@ -47,7 +47,7 @@
             <if test="remark.userId != null">
                 and remark.userId = #{remark.userId}
             </if>
-            <if test="remark.remarkInfo != null and remarkInfo != ''">
+            <if test="remark.remarkInfo != null and remark.remarkInfo != ''">
                 and remark.remarkInfo = #{remark.remarkInfo}
             </if>
             <if test="remark.remarkStatue != null">
@@ -57,7 +57,9 @@
                 and remark.commentDate = #{remark.commentDate}
             </if>
         </where>
-        limit #{offset} ,#{length};
+        <if test="offset != null and length != null ">
+            limit #{offset}, #{length};
+        </if>
     </select>
 
     <!--统计总行数-->

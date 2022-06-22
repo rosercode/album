@@ -12,6 +12,7 @@ import cool.wangshuo.album.service.AlbumService;
 import cool.wangshuo.album.utils.CommonUtils;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -149,7 +150,8 @@ public class AlbumController {
      * @return
      */
     @GetMapping(value = "/queryAll")
-    public List<JSONObject> queryAll(AlbumEntity albumFilter,Integer source, Integer pageNum, Integer pageSize) {
+    public CommonResponse queryAll(AlbumEntity albumFilter,Integer source, Integer pageNum, Integer pageSize) {
+
 
         if(this.user == null){
             log.info("【未登录用户】查询所有相册列表信息");
@@ -168,7 +170,8 @@ public class AlbumController {
         if (source == 1){
             albumFilter.setAlbumRight(1);
             albumFilter.setAlbumStatue(1);
-            return this.albumService.queryAllByLimit(albumFilter, pageNum, pageSize);
+            response.setData(this.albumService.queryAllByLimit(albumFilter, pageNum, pageSize));
+            return response;
         }
 
 
@@ -182,17 +185,20 @@ public class AlbumController {
         // 1. 要求登录
         if (this.user == null){
             response.setCode(-1);
-            return new ArrayList<>();
+            response.setData(new ArrayList<>());
+            return response;
         }
 
         // 后台一般用户
         if (this.user!=null && this.user.getUserRight() == 0){
             albumFilter.setUserId(this.user.getUserId());
-            return this.albumService.queryAllByLimit(albumFilter, pageNum, pageSize);
+            response.setData(this.albumService.queryAllByLimit(albumFilter, pageNum, pageSize));
+            return response;
         }
 
         // 管理员
-        return this.albumService.queryAllByLimit(null, pageNum, pageSize);
+        response.setData(this.albumService.queryAllByLimit(null, pageNum, pageSize));
+        return response;
     }
 
 

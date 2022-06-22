@@ -79,17 +79,19 @@ public class RemarkController {
      * @return
      */
     @GetMapping(value = "/queryAll")
-    public List<JSONObject> queryAll(RemarkEntity remarkFilter, Integer pageNum, Integer pageSize) {
+    public CommonResponse queryAll(RemarkEntity remarkFilter, Integer pageNum, Integer pageSize) {
         log.info("客户端 获取所有的评论信息");
 
         // 没有登录或者是一般用户的情况下，只能访问公开【审核通过】的评论
-        if (this.user == null || this.user.getUserRight() == 0){
+        if (this.user == null || this.user.getUserRight() == 0) {
             remarkFilter.setRemarkStatue(1);
-            return this.remarkService.queryAll(remarkFilter,pageNum,pageSize);
+            response.setData(this.remarkService.queryAll(remarkFilter, pageNum, pageSize));
+            return response;
         }
 
         // 如果是管理员,就不进行过滤
-        return this.remarkService.queryAll(null, pageNum,pageSize);
+        response.setData(this.remarkService.queryAll(null, pageNum,pageSize));
+        return response;
     }
 
     /**

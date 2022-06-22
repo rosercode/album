@@ -151,7 +151,7 @@
                     .then(function (response) {
                         // 处理成功情况
                         console.log(response.data);
-                        mainVue.remarkList = response.data
+                        mainVue.remarkList = response.data.data
                         alertify.notify("评论列表列表获取成功，一共"+mainVue.remarkList.length+"条评论", 'success', 3, function () {});
                     })
                     .catch(function (error) {

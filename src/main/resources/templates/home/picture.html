@@ -1,0 +1,158 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+
+  <title>个人中心-照片管理</title>
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/carousel/">
+
+  <!-- Bootstrap core CSS -->
+  <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="/css/carousel.css" rel="stylesheet">
+
+  <!--  <script src="/dict/jquery/jquery-3.2.1.slim.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+  <script src="https://cdn.bootcdn.net/ajax/libs/popper.js/1.15.0/esm/popper.js"></script>
+  <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+  <script src="https://cdn.bootcdn.net/ajax/libs/holder/2.9.4/holder.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.js"></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.14/vue.common.dev.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.18.0/axios.js"></script>
+
+  <script src="https://cdn.bootcdn.net/ajax/libs/AlertifyJS/1.13.1/alertify.js"></script>
+
+  <link href="https://cdn.bootcdn.net/ajax/libs/AlertifyJS/1.13.1/css/alertify.css" rel="stylesheet">
+  <link href="https://cdn.bootcdn.net/ajax/libs/AlertifyJS/1.13.1/css/themes/default.css" rel="stylesheet">
+  <link href="https://cdn.bootcdn.net/ajax/libs/AlertifyJS/1.13.1/css/themes/semantic.css" rel="stylesheet">
+  <link href="https://cdn.bootcdn.net/ajax/libs/AlertifyJS/1.13.1/css/themes/bootstrap.css" rel="stylesheet">
+  <link href="https://cdn.bootcdn.net/ajax/libs/AlertifyJS/1.13.1/css/alertify.rtl.css" rel="stylesheet">
+  <link href="https://cdn.bootcdn.net/ajax/libs/AlertifyJS/1.13.1/css/themes/default.css" rel="stylesheet">
+  <link href="https://cdn.bootcdn.net/ajax/libs/AlertifyJS/1.13.1/css/themes/semantic.rtl.min.css" rel="stylesheet">
+  <link href="https://cdn.bootcdn.net/ajax/libs/AlertifyJS/1.13.1/css/themes/bootstrap.rtl.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div th:include="component/header"></div>
+
+<main role="main">
+
+  <!-- Marketing messaging and featurettes
+  ================================================== -->
+  <!-- Wrap the rest of the page in another container to center all the content. -->
+  <br><br>
+
+  <div class="container-fluid">
+    <div class="row" id="main">
+      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" th:include="component/home_nav"></nav>
+
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+
+        <h3>照片管理</h3>
+        <div class="table-responsive">
+          <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>照片编号</th>
+              <th>所属相册编号</th>
+              <th>照片名称</th>
+              <th>照片状态</th>
+              <th>照片权限</th>
+              <!--                  <th>照片详情说明</th>-->
+              <!--                  <th>照片路径</th>-->
+              <th>图片链接</th>
+              <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(picture,index) in pictureList">
+              <td>{{index+1}}</td>
+              <td>{{picture.photoId}}</td>
+              <td>{{picture.albumId}}</td>
+              <td>{{picture.photoName}}</td>
+              <td>{{picture.photoStatue == 1 ? '管理员审核完成' : '等待审核' }}</td>
+              <td>{{picture.photoRight == 1 ? '公开' : '私有' }}</td>
+              <!--                    <td>{{picture.photoIntro}}</td>-->
+              <!--                    <td>{{picture.photoUrl}}</td>-->
+              <td><a :href="'/picture/one?photoId='+picture.photoId">Click</a></td>
+              <td>
+                <button class="btn btn-danger" @click="deletePicture(picture.photoId)" title="删除图片">Delete</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <div class="text-right">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2" title="上传图片">Upload</button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/js/home_picture.js"></script>
+
+  <!-- 开始：模态框 -->
+  <div class="modal fade" id="myModal2">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- 模态框头部 -->
+        <div class="modal-header">
+          <h4 class="modal-title">相册添加图片</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- 模态框主体 -->
+        <div class="modal-body">
+          <!--开始：添加相册的表单-->
+          <form>
+            <div class="form-group">
+              <label for="inputPhotoAlbum">图片所属相册</label>
+              <select class="form-control" id="inputPhotoAlbum">
+                <option v-for="album in albumList" :value="album.albumId">{{album.albumName}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="inputPhotoRight">图片是否公开</label>
+              <select class="form-control" id="inputPhotoRight">
+                <option value="1">公开</option>
+                <option value="0">私有</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="inputFormControlFile1">请求选择文件</label>
+              <input type="file" accept=".png,.jpg,.jpeg,image/png,image/jpg,image/jpeg" class="form-control-file" id="inputFormControlFile1">
+            </div>
+            <!--                        <div class="form-group">-->
+            <!--                          <label for="inputPhotoDesc">图片描述</label>-->
+            <!--                          <textarea class="form-control" id="inputPhotoDesc" rows="3"></textarea>-->
+            <!--                        </div>-->
+          </form><!--结束：添加相册的表单-->
+        </div>
+
+        <!-- 模态框底部 -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" @click="addPhoto()">添加</button>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- 结束：模态框 -->
+
+</main>
+
+
+
+</body>
+</html>

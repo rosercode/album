@@ -23,15 +23,29 @@ public class IndexController {
         return "index.html";
     }
 
-
     @RequestMapping(value = "/AlbumDetail.html")
     public String albumDetail() {
         return "AlbumDetail.html";
     }
 
+    @RequestMapping(value = "/home/")
+    public String home1() {
+        return "home/index.html";
+    }
+
     @RequestMapping(value = "/home/home.html")
-    public String home() {
-        return "home/home.html";
+    public String home2() {
+        return "home/index.html";
+    }
+
+    @RequestMapping(value = "/home/picture.html")
+    public String home_picture() {
+        return "home/picture.html";
+    }
+
+    @RequestMapping(value = "/home/album.html")
+    public String home_album() {
+        return "home/album.html";
     }
 
     @RequestMapping(value = "/admin/admin.html")

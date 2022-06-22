@@ -119,10 +119,20 @@ public class PictureController {
          *    2.1 图片拥有者的后台可以被展示
          *    2.2 管理员的后台可以被展示
          *    其它情况下不能展示
+         *
+         *
+         *  下面需要进行的三个步骤：
+         *  1. 前端数据校验
+         *  2. 请求接口权限检查
+         *  3. 处理业务
+         *
          */
+        if (photoId == null){
+            return;
+        }
+
         AlbumPictureEntity picture = pictureService.queryById(photoId,null);
-        String filepath = new StringBuilder()
-                .append(AlbumApplication.imagePath)
+        String filepath = new StringBuilder(AlbumApplication.imagePath)
                 .append(File.separator)
                 .append(picture.getPhotoName())
                 .toString();
@@ -136,6 +146,28 @@ public class PictureController {
             log.info("访问了不存在的图片");
             return;
         }
+
+        // 没有登录用户，但是访问了没有公开、管理员审核没有通过的图片
+        if(this.user == null && picture.getPhotoStatue() == 0 && picture.getPhotoRight() == 0){
+            // 这里应该跳转到 404 页面
+            return;
+        }
+
+        // 已经登录的用户，但是不是图片的拥有者
+        if(this.user != null && this.user.getUserRight() == 0 && picture.getPhotoUserId() != this.user.getUserId()){
+            List<String> msg = new ArrayList<>();
+
+            if (picture.getPhotoStatue() == 0){
+                msg.add("图片没有通过审核");
+            }
+            if (picture.getPhotoRight() == 0){
+                msg.add("用户没有公开图片");
+            }
+            log.info("注册用户【{}】：访问了不能访问图片，原因：{}",this.user.getUsername(),StringUtils.join(msg,","));
+            return;
+        }
+
+
 
         CommonUtils.showPhoto(response,filepath,scale);
     }

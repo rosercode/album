@@ -241,23 +241,40 @@ public class AlbumController {
         return response;
     }
 
+
     /**
      * 展示相册的封面图片 <br>
-     * Bug1:需要增加相册是否公开和审核通过的判断（后面修改） <br>
-     * @param faceImageName
+     * Bug1: [用户权限判断] 需要增加相册是否公开和审核通过的判断（后面修改） <br>
+     * PS：严格不算 Bug，可以不修复，因为相册封面是不必隐藏的
+     *
+     * @param albumId
      * @param response
      * @param scale
      * @throws IOException
      */
-    @GetMapping(value = "/face/{faceImageName}")
-    public void showAlbumFace(@PathVariable String faceImageName, HttpServletResponse response, Float scale) throws IOException {
-        String imagePath = AlbumApplication.imagePace + File.separator + faceImageName;
+    @GetMapping(value = "/face/{albumId}")
+    public void showAlbumFace(@PathVariable Integer albumId, HttpServletResponse response, Float scale) throws IOException {
 
-        if (!new File(imagePath).exists()){
-            response.sendError(404);
-        }else{
-            CommonUtils.showPhoto(response,imagePath,scale);
+        /**
+         * 流程
+         * 1. 前端数据校验
+         * 2. 用户权限检查 （划去）
+         * 3. 业务逻辑处理
+         *
+         */
+
+        if (albumId == null) {
+            return;
         }
+        AlbumEntity album = this.albumService.queryById(albumId);
+        if (album == null) {
+            return;
+        }
+        String imagePath = AlbumApplication.imagePace + File.separator + album.getAlbumFace();
 
+        if (!new File(imagePath).exists()) {
+            response.sendError(404);
+        }
+        CommonUtils.showPhoto(response, imagePath, scale);
     }
 }

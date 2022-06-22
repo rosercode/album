@@ -103,7 +103,14 @@
         insert into album_db_remark(remarkId, albumId, userId, remarkInfo, remarkStatue, commentDate)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.remarkId}, #{entity.albumId},  #{entity.userId}, #{entity.remarkInfo}, #{entity.remarkStatue},  #{entity.commentDate})
+            (
+                 #{entity.remarkId},
+                 #{entity.albumId},
+                 #{entity.userId},
+                 #{entity.remarkInfo},
+                 #{entity.remarkStatue},
+                 #{entity.commentDate}
+             )
         </foreach>
         on duplicate key update
         remarkId = values(remarkId),

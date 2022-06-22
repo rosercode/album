@@ -118,7 +118,17 @@
         insert into album_db_user(userName, userStatue, userNum, userPwd, userRight, phone, address, qqCode, remark)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.username}, #{entity.userStatue}, #{entity.userNum}, #{entity.userPwd}, #{entity.userRight}, #{entity.phone}, #{entity.address}, #{entity.qqCode}, #{entity.remark})
+            (
+                 #{entity.username},
+                 #{entity.userStatue},
+                 #{entity.userNum},
+                 #{entity.userPwd},
+                 #{entity.userRight},
+                 #{entity.phone},
+                 #{entity.address},
+                 #{entity.qqCode},
+                 #{entity.remark}
+             )
         </foreach>
         on duplicate key update
         userName = values(userName),

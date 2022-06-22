@@ -40,6 +40,10 @@ public class PictureServiceImp implements PictureService {
 
     @Override
     public List<AlbumPictureEntity> queryAll(AlbumPictureEntity picture, Integer pageNum, Integer pageSize) {
+        if (pageNum == null || pageSize == null){
+            return pictureMapper.queryAllByLimit(picture, null, null);
+        }
+
         int offset = (pageNum-1) * pageSize;
         return this.pictureMapper.queryAllByLimit(picture, offset, pageSize);
     }

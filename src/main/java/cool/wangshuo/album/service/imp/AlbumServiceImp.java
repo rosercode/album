@@ -42,6 +42,9 @@ public class AlbumServiceImp implements AlbumService {
      */
     @Override
     public List<JSONObject> queryAllByLimit(AlbumEntity album, Integer pageNum, Integer pageSize){
+        if (pageNum == null || pageSize == null){
+            return albumMapper.queryAllByLimit(album, null, null);
+        }
         int offset = (pageNum-1) * pageSize;
         return albumMapper.queryAllByLimit(album, offset, pageSize);
     }

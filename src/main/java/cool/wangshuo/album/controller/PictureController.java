@@ -121,9 +121,11 @@ public class PictureController {
          *    其它情况下不能展示
          */
         AlbumPictureEntity picture = pictureService.queryById(photoId,null);
-        String filepath = AlbumApplication.imagePath +
-                File.separator +
-                picture.getPhotoName();
+        String filepath = new StringBuilder()
+                .append(AlbumApplication.imagePath)
+                .append(File.separator)
+                .append(picture.getPhotoName())
+                .toString();
         // 图片的路径信息
 
         File imageFile = new File(filepath);
@@ -134,7 +136,6 @@ public class PictureController {
             log.info("访问了不存在的图片");
             return;
         }
-
 
         CommonUtils.showPhoto(response,filepath,scale);
     }

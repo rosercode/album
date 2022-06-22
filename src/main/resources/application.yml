@@ -5,7 +5,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1/album_db?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://127.0.0.1:3306/album_db?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
     username: root
     password: ENC(9DNSpGg2nImv9jTMdz+ORy1Ay9BqgTicdesjuHfCgE5/gq963xUWkDtXjVi3F1gq)
   devtools:
@@ -39,6 +39,6 @@ logging:
 # 自定义配置信息：图片保存地址
 image:
   # 相册内的图片的保存位置
-  path: E:\MyProject\IdeaProject\album_springboot\album_springboot\src\main\resources\static\images
+  path: ${image-path:E:\MyProject\IdeaProject\album_springboot\images}
   # 相册封面保存路径
-  face: E:\MyProject\IdeaProject\album_springboot\album_springboot\src\main\resources\static\faceImage
+  face: ${image-face:E:\MyProject\IdeaProject\album_springboot\faceImage}

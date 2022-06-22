@@ -9,7 +9,7 @@ new Vue({
                 // 处理成功情况
                 // console.log(response);
                 // const data = response.data
-                mainVue.albumList = response.data
+                mainVue.albumList = response.data.data
                 alertify.notify("公开的相册列表获取成功", 'success', 3, function () {});
             })
             .catch(function (error) {

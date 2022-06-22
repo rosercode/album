@@ -9,8 +9,10 @@ import cool.wangshuo.album.model.domain.CommonResponse;
 import cool.wangshuo.album.service.PictureService;
 import cool.wangshuo.album.utils.CommonUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.w3c.dom.stylesheets.LinkStyle;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author wangsh
@@ -96,17 +99,21 @@ public class PictureController {
     }
 
 
+
     /**
      * 展示图片
-     * @param photoId
-     * @param response
+     * @param photoId 图片的 ID
+     * @param response http's response
+     * @param scale 图片是否缩放
      * @throws IOException
      */
     @GetMapping(value = "/one")
-    public void showPhoto(Integer photoId, HttpServletResponse response,Float scale) throws IOException {
+    public void showPhoto(Integer photoId, HttpServletResponse response, Float scale) throws IOException {
         /**
          * @date 2022-05-01 04:09:02
          * 在展示图片前，要确定图片是否有权限被展示，分前台、后台
+         * PS:实际情况下，前台是不会展示有问题（没有通过审核、没有公开、、）的图片的因为：在获取图片列表时，已经区分了前台和后台（图片列表已经经过过滤了）
+         *
          * 1. 前台：用户没有公开、管理员审核没有公开不能展示、其它情况下可以展示
          * 2. 后台。
          *    2.1 图片拥有者的后台可以被展示
@@ -114,13 +121,21 @@ public class PictureController {
          *    其它情况下不能展示
          */
         AlbumPictureEntity picture = pictureService.queryById(photoId,null);
-        String filepath = AlbumApplication.imagePath + File.separator + picture.getPhotoName(); // 图片的路径信息
+        String filepath = AlbumApplication.imagePath +
+                File.separator +
+                picture.getPhotoName();
+        // 图片的路径信息
+
         File imageFile = new File(filepath);
 
+        // 图片不存在
         if (!imageFile.exists()){
             this.response.setMessage("文件不存在");
+            log.info("访问了不存在的图片");
             return;
         }
+
+
         CommonUtils.showPhoto(response,filepath,scale);
     }
 

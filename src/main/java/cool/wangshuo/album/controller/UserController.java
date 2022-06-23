@@ -1,9 +1,9 @@
 package cool.wangshuo.album.controller;
 
 import cool.wangshuo.album.annotation.AdminAuth;
-import cool.wangshuo.album.annotation.NeedLoginAuth;
 import cool.wangshuo.album.entity.AlbumUserEntity;
 import cool.wangshuo.album.model.domain.CommonResponse;
+import cool.wangshuo.album.model.vo.UserVo;
 import cool.wangshuo.album.service.UserService;
 import cool.wangshuo.album.utils.CommonUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -107,36 +107,39 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/register.api")
-    public CommonResponse register(String nickname,String account,String passwd1, String passwd2, String phone, String address, String qqCode) {
+    public CommonResponse register(UserVo userVo) {
         log.info("客户端请求注册账号");
 
-        AlbumUserEntity user = new AlbumUserEntity();
         response.setCode(-1);
 
-        if (nickname == null || nickname.equals("") || passwd1 == null || passwd1.equals("") || passwd2 == null || passwd2.equals("") || phone == null || phone.equals("") || qqCode == null || qqCode.equals(" ")) {
+        if (userVo.getUserNum() == null || userVo.getUserNum().equals("") || userVo.getPasswd() == null
+                || userVo.getPasswd().equals("") || userVo.getPasswdRepeat() == null || userVo.getPasswdRepeat().equals("")
+                || userVo.getPhone() == null || userVo.getPhone().equals("") || userVo.getQqCode() == null || userVo.getQqCode().equals(" ")) {
             response.setMessage("注册失败，信息不能为空");
             return response;
         }
 
-        if (!passwd1.equals(passwd2)) {
+
+        if (!userVo.getPasswd().equals(userVo.getPasswdRepeat())) {
             response.setMessage("注册失败，两次密码不一致");
             return response;
         }
 
+        AlbumUserEntity registerUser = new AlbumUserEntity();
         Integer id = Integer.parseInt(CommonUtils.uuid());
-        user.setUserId(id);          // 生成主键 ID
-        user.setUsername(nickname);  // 设置用户名
-        user.setUserNum(account);    // 设置账号
-        user.setPhone(phone);        // 设置手机号
-        user.setAddress(address);
-        user.setQqCode(qqCode);      // 设置 QQ 号
-        user.setUserPwd(passwd1);    // 设置密码
-        user.setUserStatue(1);       // 设置用户的状态 管理员 或者 一般用户
-        user.setUserRight(0);        // 设置用户的权限 可使用，或者不可使用
+
+        registerUser.setUserId(id);
+        registerUser.setUserNum(userVo.getUserNum()); // 设置账号
+        registerUser.setUsername(userVo.getUsername()); //
+        registerUser.setUserPwd(userVo.getPasswd()); //  设置密码
+        registerUser.setPhone(userVo.getPhone());  // 设置手机号
+        registerUser.setQqCode(userVo.getQqCode()); // 设置 QQ 号
+        registerUser.setUserStatue(1);       // 设置用户的状态 管理员 或者 一般用户
+        registerUser.setUserRight(0);        // 设置用户的权限 可使用，或者不可使用
 
         response.setCode(1);
         response.setMessage("注册完成,正在跳转到的登录界面......");
-        userService.insert(user);
+        userService.insert(registerUser);
         return response;
     }
 

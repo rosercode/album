@@ -63,7 +63,7 @@ public class UserController {
     @RequestMapping(value = "/login.api")
     public CommonResponse login(AlbumUserEntity user) {
         log.info("客户端请求登录");
-        response.setCode(-1);
+        this.response.setCode(-1);
 
         if (user.getUserNum() == null || user.getUserNum().equals("") || user.getUserPwd() == null || user.getUserPwd().equals("")) {
             response.setMessage("登录信息不能为空");
@@ -97,13 +97,7 @@ public class UserController {
 
     /**
      * 用户注册 Api 接口
-     * @param nickname  昵称
-     * @param account   账号
-     * @param passwd1   第一次的密码
-     * @param passwd2   第二次的密码
-     * @param phone     手机号码
-     * @param address   地址信息
-     * @param qqCode    QQ号码
+     * @param userVo 前端数据模型
      * @return
      */
     @RequestMapping(value = "/register.api")
@@ -140,6 +134,24 @@ public class UserController {
         response.setCode(1);
         response.setMessage("注册完成,正在跳转到的登录界面......");
         userService.insert(registerUser);
+        return response;
+    }
+
+    /**
+     * 获取登录用户信息接口
+     * @return
+     */
+    @RequestMapping(value = "/userMsg.api")
+    public CommonResponse userMsg(){
+        if(this.user == null){
+            response.setCode(-1);
+            response.setMessage("当前没有用户登录");
+            return response;
+        }
+
+        response.setCode(1);
+        response.setData(this.user);
+        response.setMessage("用户信息获取成功");
         return response;
     }
 

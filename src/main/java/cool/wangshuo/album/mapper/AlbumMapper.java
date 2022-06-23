@@ -38,7 +38,7 @@ public interface AlbumMapper {
 
 
     /**
-     *
+     * 有限制性的查询数据
      * @param albumEntityFilter
      * @param offset
      * @param length
@@ -49,7 +49,6 @@ public interface AlbumMapper {
             @Param("offset") Integer offset,
             @Param("length") Integer length
     );
-
 
     /**
      * 统计总行数

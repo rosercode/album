@@ -16,16 +16,18 @@ import java.util.List;
 public interface PictureMapper {
 
 
+
     /**
      * 通过ID查询单条数据
-     * @param pictureId 主键
-     * @return 实例对象
+     * @param photoId 主键
+     * @param photoStatue 图片状态
+     * @return
      */
     AlbumPictureEntity queryById(Integer photoId,Integer photoStatue);
 
 
     /**
-     *
+     * 获取某个相册的全部图片
      * @param albumId
      * @return
      */
@@ -39,6 +41,13 @@ public interface PictureMapper {
     List<AlbumPictureEntity> queryAll();
 
 
+    /**
+     * 有限制查询所有数据
+     * @param pictureFilter
+     * @param offset Limit 语句偏移量
+     * @param length Length 查询长度
+     * @return
+     */
     List<AlbumPictureEntity> queryAllByLimit(
                 @Param("picture") AlbumPictureEntity pictureFilter,
                 @Param("offset") Integer offset,

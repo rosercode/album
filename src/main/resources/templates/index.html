@@ -7,8 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>欢迎使用 (๑￫ܫ￩)</title>
     <link rel="stylesheet" href="css/index1.css">
-    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.14/vue.common.dev.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.18.0/axios.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.7.0-beta.2/vue.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/AlertifyJS/1.13.1/alertify.js"></script>
     <link href="https://cdn.bootcdn.net/ajax/libs/AlertifyJS/1.13.1/css/alertify.css" rel="stylesheet">
 
@@ -51,7 +51,7 @@
                         <div class="col-lg-4 col-md-6 mb-4" v-for="(album,index) in albumList">
                             <div class="card">
                                 <div class="bg-image hover-overlay ripple tmp" data-mdb-ripple-color="light">
-                                    <img :src="'/album/face/'+album.albumFace" class="img-fluid" />
+                                    <img :src="'/album/face/'+album.albumId" class="img-fluid" />
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title">{{album.albumName}}</h5>
@@ -75,7 +75,10 @@
     </div>
 </main>
 
-<script src="/js/index.js"></script>
+
+<script src="/js/common.js" type="module"></script>
+<script src="/js/index.js" type="module"></script>
+
 
 </body>
 </html>

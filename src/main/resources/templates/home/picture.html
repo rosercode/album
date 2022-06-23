@@ -19,14 +19,14 @@
   <link href="/css/carousel.css" rel="stylesheet">
 
   <!--  <script src="/dict/jquery/jquery-3.2.1.slim.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
-  <script src="https://cdn.bootcdn.net/ajax/libs/popper.js/1.15.0/esm/popper.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/popper.js/2.11.5/umd/popper.js"></script>
   <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
   <script src="https://cdn.bootcdn.net/ajax/libs/holder/2.9.4/holder.js"></script>
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
   <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.js"></script>
 
-  <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.14/vue.common.dev.js"></script>
   <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.18.0/axios.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.7.0-beta.2/vue.js"></script>
 
   <script src="https://cdn.bootcdn.net/ajax/libs/AlertifyJS/1.13.1/alertify.js"></script>
 
@@ -44,7 +44,7 @@
 
 <div th:include="component/header"></div>
 
-<main role="main">
+<main role="main" id="main">
 
   <!-- Marketing messaging and featurettes
   ================================================== -->
@@ -52,7 +52,7 @@
   <br><br>
 
   <div class="container-fluid">
-    <div class="row" id="main">
+    <div class="row" >
       <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" th:include="component/home_nav"></nav>
 
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
@@ -99,7 +99,7 @@
     </div>
   </div>
 
-  <script src="/js/home_picture.js"></script>
+
 
   <!-- 开始：模态框 -->
   <div class="modal fade" id="myModal2">
@@ -152,6 +152,8 @@
 
 </main>
 
+<script src="/js/common.js" type="module"></script>
+<script src="/js/home_picture.js" type="module"></script>
 
 
 </body>

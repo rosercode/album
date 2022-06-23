@@ -1,5 +1,15 @@
+import * as obj from "/js/common.js";
+
+const common = obj.common
+
 var mainData = {
-    albumList:[]
+    albumList:[],
+    page: {
+        totalNum: 100,  // 数据总数
+        totalPage: 1,  // 总页数
+        currentPage: 3,  // 当前页
+        pageSize: 39  // 页大小
+    }
 }
 new Vue({
     el: "#main",
@@ -14,47 +24,15 @@ new Vue({
     methods: {
         // 获取相册列表
         hello2: function () {
-            axios.get('/album/queryAll?source=2')
-                .then(function (response) {
-                    // 处理成功情况
-                    // console.log(response);
-                    const res = response.data
-                    mainData.albumList = res.data
-                    alertify.notify("相册列表获取成功", 'success', 3, function () {
-                    });
-                })
-                .catch(function (error) {
-                    // 处理错误情况
-                    alertify.notify("相册列表获取失败" + error, 'success', 3, function () {
-                    });
-                    // console.log(error);
-                })
-                .then(function () {
-                    // 总是会执行
-                });
-        },
-        // 删除相册信息
-        deleteAlbum: function (albumId) {
-            // console.log(albumId)
+            common.findAllAlbum({source:2},function (err, response){
+                if (err){
+                    alertify.notify("相册列表获取失败" + error, 'success', 3, function () {});
 
-            const that = this
-            axios.get('/album/delete?albumId=' + albumId)
-                .then(function (response) {
-                    // 处理成功情况
-                    // console.log(response);
-                    that.$options.methods.hello2()
-                    alertify.notify("相册删除完成", 'success', 3, function () {
-                    });
-                })
-                .catch(function (error) {
-                    // 处理错误情况
-                    alertify.notify("相册删除失败" + error, 'success', 3, function () {
-                    });
-                    // console.log(error);
-                })
-                .then(function () {
-                    // 总是会执行
-                });
+                }else{
+                    mainData.albumList = response.data.data
+                    alertify.notify("相册列表获取成功", 'success', 3, function () {});
+                }
+            })
         },
         // 添加相册
         addAlbum: function () {

@@ -15,13 +15,13 @@
   <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css" rel="stylesheet">
   <!-- Custom styles for this template -->
   <link href="/css/carousel.css" rel="stylesheet">
-  <script src="https://cdn.bootcdn.net/ajax/libs/popper.js/1.15.0/esm/popper.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/popper.js/2.11.5/umd/popper.js"></script>
   <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
   <script src="https://cdn.bootcdn.net/ajax/libs/holder/2.9.4/holder.js"></script>
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
   <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.js"></script>
 
-  <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.14/vue.common.dev.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.7.0-beta.2/vue.js"></script>
   <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.18.0/axios.js"></script>
 
 
@@ -61,7 +61,7 @@
               <th>照片名称</th>
               <th>照片状态</th>
               <th>照片权限</th>
-              <th>照片路径</th>
+<!--              <th>照片路径</th>-->
               <th>图片</th>
               <th>操作</th>
             </tr>
@@ -74,8 +74,8 @@
               <td>{{picture.photoName}}</td>
               <td>{{picture.photoStatue == 1 ? '管理员审核通过' : '未审核或者没有通过审核' }}</td>
               <td>{{picture.photoRight == 1 ? '可访问' : '不可访问' }}</td>
-              <td>{{picture.photoIntro}}</td>
-              <td>{{picture.photoUrl}}</td>
+<!--              <td>{{picture.photoIntro}}</td>-->
+<!--              <td>{{picture.photoUrl}}</td>-->
               <td><a :href="'/picture/one?photoId='+ picture.photoId">点击查看图片</a></td>
               <td>
                 <button class="btn btn-danger" @click="deletePicture(picture.photoId)">删除</button>
@@ -88,11 +88,10 @@
       </main>
     </div>
   </div>
-  <script src="/js/admin_picture.js"></script>
-
-
 </main>
 
+<script src="/js/common.js" type="module"></script>
+<script src="/js/admin_picture.js" type="module"></script>
 
 
 </body>

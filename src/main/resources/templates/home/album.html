@@ -18,15 +18,15 @@
   <!-- Custom styles for this template -->
   <link href="/css/carousel.css" rel="stylesheet">
 
-<!--  <script src="/dict/jquery/jquery-3.2.1.slim.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
-  <script src="https://cdn.bootcdn.net/ajax/libs/popper.js/1.15.0/esm/popper.js"></script>
+  <!--  <script src="/dict/jquery/jquery-3.2.1.slim.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+  <script src="https://cdn.bootcdn.net/ajax/libs/popper.js/2.11.5/umd/popper.js"></script>
   <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
   <script src="https://cdn.bootcdn.net/ajax/libs/holder/2.9.4/holder.js"></script>
   <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
   <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.js"></script>
 
-  <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.14/vue.common.dev.js"></script>
   <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.18.0/axios.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.7.0-beta.2/vue.js"></script>
 
   <script src="https://cdn.bootcdn.net/ajax/libs/AlertifyJS/1.13.1/alertify.js"></script>
 
@@ -49,58 +49,57 @@
   <!-- Marketing messaging and featurettes
   ================================================== -->
   <!-- Wrap the rest of the page in another container to center all the content. -->
-    <br><br>
+  <br><br>
 
-    <div class="container-fluid">
-      <div class="row" id="main">
-        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" th:include="component/home_nav">
-        </nav>
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-          <h3>相册管理</h3>
-          <div class="table-responsive">
-            <table class="table table-striped table-sm">
-              <thead>
-              <tr>
-                <th>#</th>
-                <th>相册编号</th>
-                <th>所属用户编号</th>
-                <th>相册名称</th>
-                <th>相册审核状态</th>
-                <th>是否公开</th>
-                <!--                <th>链接</th>-->
-                <th>操作</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr v-for="(album,index) in albumList">
-                <td>{{index+1}}</td>
-                <td>{{album.albumId}}</td>
-                <td>{{album.userId}}</td>
-                <td>{{album.albumName}}</td>
-                <td>{{album.albumStatue == '1' ? '审核通过' : '等待管理员审核'}}</td>
-                <td>{{album.albumRight == '1' ? '可访问（公开）' : '不可访问（私有）'}}</td>
-                <!--                <td><a :href="'/picture/one?photoId='+picture.photoId">点击查看图片</a></td>-->
-                <td>
-                  <button class="btn btn-danger" @click="deleteAlbum(album.albumId)">删除</button>
-                </td>
-              </tr>
-              </tbody>
-            </table>
-            <div class="text-right">
+  <div class="container-fluid">
+    <div class="row" id="main">
+      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" th:include="component/home_nav">
+      </nav>
+      <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+        <h3>相册管理</h3>
+        <div class="table-responsive">
+          <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>相册编号</th>
+              <th>所属用户编号</th>
+              <th>相册名称</th>
+              <th>相册审核状态</th>
+              <th>是否公开</th>
+              <!--                <th>链接</th>-->
+              <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(album,index) in albumList">
+              <td>{{index+1}}</td>
+              <td>{{album.albumId}}</td>
+              <td>{{album.userId}}</td>
+              <td>{{album.albumName}}</td>
+              <td>{{album.albumStatue == '1' ? '审核通过' : '等待管理员审核'}}</td>
+              <td>{{album.albumRight == '1' ? '可访问（公开）' : '不可访问（私有）'}}</td>
+              <!--                <td><a :href="'/picture/one?photoId='+picture.photoId">点击查看图片</a></td>-->
+              <td>
+                <button class="btn btn-danger" @click="deleteAlbum(album.albumId)">删除</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <div class="text-right">
 
-              <!-- 按钮：用于打开模态框 -->
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1" title="创建相册">创建</button>
-            </div>
+            <!-- 按钮：用于打开模态框 -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1" title="创建相册">创建</button>
           </div>
+        </div>
 
-        </main>
-      </div>
+      </main>
     </div>
-
-    <script src="/js/home_album.js"></script>
+  </div>
 
 
 </main>
+
 
 
 <!-- 开始：模态框 -->
@@ -151,6 +150,8 @@
 </div><!-- 结束：模态框 -->
 
 
+<script src="/js/common.js" type="module"></script>
+<script src="/js/home_album.js" type="module"></script>
 
 </body>
 </html>

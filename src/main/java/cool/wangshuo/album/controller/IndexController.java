@@ -1,7 +1,14 @@
 package cool.wangshuo.album.controller;
 
+import cool.wangshuo.album.entity.AlbumUserEntity;
+import cool.wangshuo.album.model.domain.CommonResponse;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * 返回前端响应的网页 【拼接网页框架】 <br>
@@ -13,12 +20,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(produces="text/html;charset=UTF-8")
 public class IndexController {
 
-    @RequestMapping(value = "/")
-    public String index12() {
-        return "index.html";
+    private String uri;
+    private AlbumUserEntity user;
+
+    public IndexController() {
+
     }
 
-    @RequestMapping(value = "/index.html")
+    @ModelAttribute
+    public void setReqAndRes(HttpServletRequest request, HttpSession session) {
+        this.uri = request.getRequestURI();
+        this.user = (AlbumUserEntity) session.getAttribute("user");
+    }
+
+    @RequestMapping(value = {
+            "/",
+            "/index.html"}
+    )
+
     public String index() {
         return "index.html";
     }
@@ -29,27 +48,57 @@ public class IndexController {
     }
 
     @RequestMapping(value = "/home/")
-    public String home1() {
+    public String home() {
+
+        // 自定义三级路由
+        if (this.uri.endsWith("/") || this.uri.endsWith("/index.html")){
+            return "home/index.html";
+        }
+
+        if (this.uri.endsWith("home.html")){
+            return "home/index.html";
+        }
+
+        if (this.uri.endsWith("picture.html")){
+            return "home/picture.html";
+        }
+
+        if (this.uri.endsWith("album.html")){
+            return "home/album.html";
+        }
         return "home/index.html";
     }
 
-    @RequestMapping(value = "/home/home.html")
-    public String home2() {
-        return "home/index.html";
-    }
 
-    @RequestMapping(value = "/home/picture.html")
-    public String home_picture() {
-        return "home/picture.html";
-    }
-
-    @RequestMapping(value = "/home/album.html")
-    public String home_album() {
-        return "home/album.html";
-    }
-
-    @RequestMapping(value = "/admin/admin.html")
+    @RequestMapping(value = "/admin/")
     public String admin() {
-        return "admin/admin.html";
+
+        // 自定义三级路由
+        if (this.uri.endsWith("/") || this.uri.endsWith("/index.html")){
+            return "admin/index.html";
+        }
+
+        if (this.uri.endsWith("admin.html")){
+            return "admin/album.html";
+        }
+
+        if (this.uri.endsWith("user.html")){
+            return "admin/user.html";
+        }
+
+        if (this.uri.endsWith("album.html")){
+            return "admin/album.html";
+        }
+
+        if (this.uri.endsWith("picture.html")){
+            return "admin/picture.html";
+        }
+
+        if (this.uri.endsWith("remark.html")){
+            return "admin/remark.html";
+        }
+
+        return "admin/index.html";
     }
+
 }

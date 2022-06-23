@@ -47,13 +47,10 @@ public class IndexController {
         return "AlbumDetail.html";
     }
 
-    @RequestMapping(value = "/home/")
+    @RequestMapping(value = "/home/*")
     public String home() {
 
         // 自定义三级路由
-        if (this.uri.endsWith("/") || this.uri.endsWith("/index.html")){
-            return "home/index.html";
-        }
 
         if (this.uri.endsWith("home.html")){
             return "home/index.html";
@@ -66,17 +63,19 @@ public class IndexController {
         if (this.uri.endsWith("album.html")){
             return "home/album.html";
         }
+
+        if (this.uri.endsWith("/") || this.uri.endsWith("/index.html")){
+            return "home/index.html";
+        }
+
         return "home/index.html";
     }
 
 
-    @RequestMapping(value = "/admin/")
+    @RequestMapping(value = "/admin/*")
     public String admin() {
 
         // 自定义三级路由
-        if (this.uri.endsWith("/") || this.uri.endsWith("/index.html")){
-            return "admin/index.html";
-        }
 
         if (this.uri.endsWith("admin.html")){
             return "admin/album.html";
@@ -96,6 +95,10 @@ public class IndexController {
 
         if (this.uri.endsWith("remark.html")){
             return "admin/remark.html";
+        }
+
+        if (this.uri.endsWith("/") || this.uri.endsWith("/index.html")){
+            return "admin/index.html";
         }
 
         return "admin/index.html";

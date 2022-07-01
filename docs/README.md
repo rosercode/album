@@ -4,10 +4,10 @@
 - [引言](#引言)
 - [项目架构](#项目架构)
 - [Database's Design](#databases-design)
-    - [1、表名：album_db_album](#1、表名：albumdbalbum)
-    - [2、表名：album_db_picture](#2、表名：albumdbpicture)
-    - [3、表名：album_db_remark](#3、表名：albumdbremark)
-    - [4、表名：album_db_user](#4、表名：albumdbuser)
+    - [表名：album_db_album](#表名：albumdbalbum)
+    - [表名：album_db_picture](#表名：albumdbpicture)
+    - [表名：album_db_remark](#表名：albumdbremark)
+    - [表名：album_db_user](#表名：albumdbuser)
 - [功能设计](#功能设计)
     - [游客模块](#游客模块)
     - [用户模块](#用户模块)
@@ -21,7 +21,6 @@
     - [启动项目](#启动项目)
 
 <!-- /TOC -->
-
 
 ## 引言
 
@@ -44,7 +43,7 @@ E-R 图
 
 ​					
 
-### 1、表名：album_db_album
+### 表名：album_db_album
 
 | 注释： | 相册信息表         | 引擎： | InnoDB     |
 | ------ | ------------------ | ------ | ---------- |
@@ -64,7 +63,7 @@ E-R 图
 
  
 
-### 2、表名：album_db_picture
+### 表名：album_db_picture
 
 | 注释： | 照片信息表         | 引擎： | InnoDB     |
 | ------ | ------------------ | ------ | ---------- |
@@ -88,7 +87,7 @@ E-R 图
 
  
 
-### 3、表名：album_db_remark
+### 表名：album_db_remark
 
 | 注释： | 评论信息表         | 引擎： | InnoDB     |
 | ------ | ------------------ | ------ | ---------- |
@@ -109,7 +108,7 @@ E-R 图
 
  
 
-### 4、表名：album_db_user
+### 表名：album_db_user
 
 | 注释： | 用户信息表：普通用户和管理员 | 引擎： | InnoDB     |
 | ------ | ---------------------------- | ------ | ---------- |
@@ -136,7 +135,8 @@ E-R 图
 
 ### 游客模块
 
-访问公开、通过管理员审核的相册、查询公开的图片
+1. 访问公开、通过管理员审核的相册、查询公开的图片
+2. 注册账号
 
 ### 用户模块
 
@@ -197,10 +197,18 @@ E-R 图
 
 修改和mysql数据库相关的配置和图片保存位置的配置
 
+> 可以在项目的启动中配置 图片保存的位置
+
 ### 启动项目
 
 ```bash
 java -jar album-0.0.6.jar
+```
+
+或者
+
+```bash
+java  -Dimage.path=image -Dimage.face=faceimage -jar album-0.0.6.jar
 ```
 
 

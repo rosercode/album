@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
+ * 封装的公共类
  * @author wangsh
  * @date 2022/4/29 23:54
  */
@@ -53,7 +54,7 @@ public class CommonUtils {
      * 展示图片 设置响应流 <br>
      * 1. 设置响应的 MIME（文件类型） <br>
      * 2. 向响应流中写入图片字节流 <br>
-     * 3. 更加参数考虑是否对图片进行缩放 <br><br>
+     * 3. 根据参数考虑是否对图片进行缩放 <br><br>
      * @param response http 响应
      * @param imagePath 图片的路径
      * @param scale 图片的缩放情况

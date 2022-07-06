@@ -44,15 +44,15 @@
 
 <div th:include="component/header"></div>
 
-<main role="main">
+<main role="main" id="main">
 
   <!-- Marketing messaging and featurettes
   ================================================== -->
   <!-- Wrap the rest of the page in another container to center all the content. -->
   <br><br>
 
-  <div class="container-fluid">
-    <div class="row" id="main">
+  <div class="container-fluid" >
+    <div class="row">
       <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" th:include="component/home_nav">
       </nav>
       <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
@@ -97,61 +97,63 @@
     </div>
   </div>
 
+  <!-- 开始：模态框 -->
+  <div class="modal fade" id="myModal1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- 模态框头部 -->
+        <div class="modal-header">
+          <h4 class="modal-title">创建相册</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- 模态框主体 -->
+        <div class="modal-body">
+          <!--开始：添加相册的表单-->
+          <form>
+            <div class="form-group">
+              <label for="inputAlbumTitle">相册标题</label>
+              <input type="text" class="form-control" id="inputAlbumTitle" placeholder="">
+            </div>
+            <div class="form-group">
+              <label for="inputFormImage1">请求选择封面图片</label>
+              <input type="file" accept=".png,.jpg,.jpeg,image/png,image/jpg,image/jpeg" class="form-control-file" id="inputFormImage1">
+            </div>
+            <div class="form-group">
+              <label for="inputAlbumRight">是否公开</label>
+              <select class="form-control" id="inputAlbumRight">
+                <option>公开</option>
+                <option>私有</option>
+              </select>
+            </div>
+            <!--                        <div class="form-group">-->
+            <!--                          <label for="exampleFormControlTextarea1">相册描述</label>-->
+            <!--                          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>-->
+            <!--                        </div>-->
+          </form><!--结束：添加相册的表单-->
+        </div>
+
+        <!-- 模态框底部 -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" @click="addAlbum()">添加</button>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- 结束：模态框 -->
+
 
 </main>
 
 
 
-<!-- 开始：模态框 -->
-<div class="modal fade" id="myModal1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <!-- 模态框头部 -->
-      <div class="modal-header">
-        <h4 class="modal-title">创建相册</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-
-      <!-- 模态框主体 -->
-      <div class="modal-body">
-        <!--开始：添加相册的表单-->
-        <form>
-          <div class="form-group">
-            <label for="inputAlbumTitle">相册标题</label>
-            <input type="text" class="form-control" id="inputAlbumTitle" placeholder="">
-          </div>
-          <div class="form-group">
-            <label for="inputFormImage1">请求选择封面图片</label>
-            <input type="file" accept=".png,.jpg,.jpeg,image/png,image/jpg,image/jpeg" class="form-control-file" id="inputFormImage1">
-          </div>
-          <div class="form-group">
-            <label for="inputAlbumRight">是否公开</label>
-            <select class="form-control" id="inputAlbumRight">
-              <option>公开</option>
-              <option>私有</option>
-            </select>
-          </div>
-          <!--                        <div class="form-group">-->
-          <!--                          <label for="exampleFormControlTextarea1">相册描述</label>-->
-          <!--                          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>-->
-          <!--                        </div>-->
-        </form><!--结束：添加相册的表单-->
-      </div>
-
-      <!-- 模态框底部 -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" @click="addAlbum()">添加</button>
-      </div>
-
-    </div>
-  </div>
-</div><!-- 结束：模态框 -->
-
-
 <script src="/js/common.js" type="module"></script>
 <script src="/js/home_album.js" type="module"></script>
+
+
+
 
 </body>
 </html>
